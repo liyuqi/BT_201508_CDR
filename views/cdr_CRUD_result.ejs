@@ -6,7 +6,7 @@
 <body>
 
 <fieldset>
-    <legend>查詢 log</legend>
+    <legend>查詢 CDR</legend>
 </fieldset>
 
 <% if (resp) { %>
@@ -14,7 +14,7 @@
 <% if (resp.length == 0) { %>
 <h4>查無資料!</h4>
 <% } else{ %>
-<h3> 總量 : <% db_count %>筆資料, 符合<% totalcount %> 筆 , 顯示前 <%= resp.length %> 筆</h3>
+<h3> 總量 : <%= db_count %>筆資料, 符合<%= totalcount %> 筆, 顯示前 <%= resp.length %> 筆</h3>
 
 
 

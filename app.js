@@ -11,8 +11,9 @@ var routes = require('./routes');
 //var mongodbAlert = require('./routes/mongodbAlert');
 //var mongoStatus = require('./routes/sys_mongoShell');
 var sys_mongo = require('./routes/sys_mongo');
-
 var sys_alert = require('./routes/sys_alert');
+var cdr_mongo = require('./routes/cdr_mongo');
+var cdr_2g_mongo = require('./routes/cdr_2g_mongo');
 
 var util = require('util');
 var http = require('http');
@@ -28,6 +29,9 @@ var monk = require('monk');
 //var dbalerts = monk('192.168.0.190/alerts');
 var dbfluentd = monk('127.0.0.1/fluentd');
 //var dbfluentd = monk('172.17.24.196/fluentd');
+//var dbCDR = monk('172.17.24.196:27017/fluentd');
+var dbCDR = monk('127.0.0.1:27017/cdr');
+
 
 var partials = require('express-partials');
 var flash = require('connect-flash');
@@ -77,7 +81,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-
+//==================================================syslog============================
 //app.get('/sys_CRUD_index', sys_mongo.index);
 app.get('/sys_CRUD_insert', sys_mongo.index);
 app.post('/sys_CRUD_insert',sys_mongo.sys_CRUD_insert(dbfluentd));
@@ -97,6 +101,14 @@ app.get('/sys_ALERT_delete', 	sys_alert.sys_ALERT_delete(dbfluentd));
 //app.post('/sys_ALERT_display', 	sys_alert.sys_ALERT_query(dbfluentd));
 app.use('/sys_ALERT_event', 	sys_alert.sys_ALERT_event(dbfluentd));
 
+
+//================================================= C D R ============================
+app.get('/cdr_CRUD_insert', cdr_mongo.index);
+//app.post('/cdr_CRUD_insert',cdr_mongo.cdr_CRUD_insert(dbCDR));
+app.get('/cdr_CRUD_query', 	cdr_mongo.cdr_CRUD_loglist(dbCDR));
+app.post('/cdr_CRUD_query', cdr_mongo.cdr_CRUD_query(dbCDR));
+app.get('/cdr_CRUD_show', 	cdr_mongo.cdr_CRUD_count(dbCDR));
+//app.post('/sys_CRUD_show', 	sys_mongo.sys_CRUD_show(dbfluentd));
 
 //app.get('/test_page_timePicker', function(req,res){
 //	res.render('test_page_timePicker', { title: 'test_page_timePicker', resp : false});

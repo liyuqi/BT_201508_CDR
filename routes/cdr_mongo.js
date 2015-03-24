@@ -139,10 +139,9 @@ exports.cdr_CRUD_query = function(mongodb){
         var keys = [];
         for(var k in query) keys.push(k);
 
-        if(keys.length==0) {
-            console.log(keys.length);
-            //res.redirect('cdr_CRUD_query');
-        }
+        if(keys.length==0)
+            res.redirect('cdr_CRUD_query');
+
         //query
         var collection = mongodb.get('cep3g');
         collection.count({},function(err,db_count){
