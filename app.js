@@ -108,6 +108,7 @@ app.get('/cdr_CRUD_insert', cdr_mongo.index);
 app.get('/cdr_CRUD_query', 	cdr_mongo.cdr_CRUD_loglist(dbCDR));
 app.post('/cdr_CRUD_query', cdr_mongo.cdr_CRUD_query(dbCDR));
 app.get('/cdr_CRUD_show', 	cdr_mongo.cdr_CRUD_count(dbCDR));
+
 //app.post('/sys_CRUD_show', 	sys_mongo.sys_CRUD_show(dbfluentd));
 
 //app.get('/test_page_timePicker', function(req,res){
