@@ -29,8 +29,9 @@ var monk = require('monk');
 //var dbalerts = monk('192.168.0.190/alerts');
 var dbfluentd = monk('127.0.0.1/fluentd');
 //var dbfluentd = monk('172.17.24.196/fluentd');
-//var dbCDR = monk('172.17.24.196:27017/fluentd');
-var dbCDR = monk('127.0.0.1:27017/cdr');
+var dbCDR = monk('172.17.24.196:27017/cdr');
+//var dbCDR = monk('192.168.0.196:27017/cdr');
+//var dbCDR = monk('127.0.0.1:27017/cdr');
 
 
 var partials = require('express-partials');
@@ -52,7 +53,7 @@ app.set('port', process.env.PORT || 8000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(express.logger({stream: logFile}));
+
 app.use(partials());
 app.use(flash());
 
@@ -72,8 +73,11 @@ app.use(express.session({
 	store: sessionStore
 }));
 
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.enable('trust proxy');
+app.use(express.logger({stream: logFile}));  //========logging========
+app.use(app.router);
+
 
 // development only
 if ('development' == app.get('env')) {
@@ -108,6 +112,12 @@ app.get('/cdr_CRUD_insert', cdr_mongo.index);
 app.get('/cdr_CRUD_query', 	cdr_mongo.cdr_CRUD_loglist(dbCDR));
 app.post('/cdr_CRUD_query', cdr_mongo.cdr_CRUD_query(dbCDR));
 app.get('/cdr_CRUD_show', 	cdr_mongo.cdr_CRUD_count(dbCDR));
+
+app.get('/cdr_CRUD_2g_insert', cdr_mongo.index);
+//app.post('/cdr_CRUD_insert',cdr_mongo.cdr_CRUD_insert(dbCDR));
+app.get('/cdr_CRUD_2g_query', 	cdr_2g_mongo.cdr_CRUD_loglist(dbCDR));
+app.post('/cdr_CRUD_2g_query', cdr_2g_mongo.cdr_CRUD_query(dbCDR));
+app.get('/cdr_CRUD_2g_show', 	cdr_2g_mongo.cdr_CRUD_count(dbCDR));
 
 //app.post('/sys_CRUD_show', 	sys_mongo.sys_CRUD_show(dbfluentd));
 

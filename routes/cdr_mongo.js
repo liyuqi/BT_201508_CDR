@@ -37,7 +37,7 @@ exports.index = function(req, res){
 
 exports.cdr_CRUD_loglist = function(mongodb){
     return function(req, res) {
-        var collection = mongodb.get('cep3g');
+        var collection = mongodb.get('cep3g_string');
         collection.col.count({},function(err, count) {
             if(err) res.redirect('cdr_CRUD_query');
             //console.log(format("count = %s", count));
@@ -74,8 +74,14 @@ exports.cdr_CRUD_query = function(mongodb){
         if(req.body.calling_imei){
             query.calling_imei = req.body.calling_imei.trim();
         }
+        if(req.body.called_imei){
+            query.called_imei = req.body.called_imei.trim();
+        }
         if(req.body.calling_imsi){
             query.calling_imsi = req.body.calling_imsi.trim();
+        }
+        if(req.body.called_imsi){
+            query.called_imsi = req.body.called_imsi.trim();
         }
         if(req.body.calling_number){
             query.calling_number = req.body.calling_number.trim();
@@ -107,6 +113,9 @@ exports.cdr_CRUD_query = function(mongodb){
         if(req.body.orig_mcz_duration){
             query.orig_mcz_duration = req.body.orig_mcz_duration.trim();
         }
+        if(req.body.term_mcz_duration){
+            query.term_mcz_duration = req.body.term_mcz_duration.trim();
+        }
         if(req.body.radio_network_type){
             query.radio_network_type = req.body.radio_network_type.trim();
         }
@@ -118,18 +127,18 @@ exports.cdr_CRUD_query = function(mongodb){
         //}
 /*
         called_number
-        calling_imei
-        calling_imsi
+        calling_imei    called_imei
+        calling_imsi    called_imsi
         calling_number
-        calling_subs_last_ci
-        calling_subs_last_lac
-        calling_subs_last_mcc
-        calling_subs_last_mnc
+        calling_subs_last_ci    called_subs_last_ci
+        calling_subs_last_lac   called_subs_last_lac
+        calling_subs_last_mcc   called_subs_last_mcc
+        calling_subs_last_mnc   called_subs_last_mnc
         exchange_id
         cause_for_termination
         charging_end_time
         charging_start_time
-        orig_mcz_duration
+        orig_mcz_duration   term_mcz_duration
         radio_network_type
         record_type
         date_time
@@ -143,7 +152,7 @@ exports.cdr_CRUD_query = function(mongodb){
             res.redirect('cdr_CRUD_query');
 
         //query
-        var collection = mongodb.get('cep3g');
+        var collection = mongodb.get('cep3g_string');
         collection.count({},function(err,db_count){
             collection.count(query, function (err, query_count) {
                 collection.find(query, {limit: _max_pageunit}, function (err, docs) {
@@ -168,7 +177,7 @@ exports.cdr_CRUD_count = function (mongodb) {
     return function (req, res) {
         //var page = req.query.p ? parseInt(req.query.p) : 1;
         console.log('cdr_count');
-        var collection = mongodb.get('cep3g');
+        var collection = mongodb.get('cep3g_string');
         collection.count({},function(err,count){
             collection.find({}, {limit : _pageunit ,sort : { _id : -1 }} , function (err, docs) {
                 console.log('cdr: ',docs.length/*,JSON.stringify(docs[0])*/);
@@ -186,7 +195,7 @@ exports.cdr_CRUD_count = function (mongodb) {
 exports.cdr_CRUD_show = function (mongodb) {
     return function (req, res) {
         console.log('cdr_show');
-        var collection = mongodb.get('cdr3g');
+        var collection = mongodb.get('cep3g_string');
         collection.count({}, function (err, count) {
             collection.find({}, {limit: _pageunit, sort: {_id: -1}}, function (e, docs) {
                 // console.log("docs data : "+util.inspect(docs));
@@ -208,7 +217,7 @@ exports.cdr_CRUD_show_pagging = function (mongodb) {
     return function (req, res) {
         var page = req.query.p ? parseInt(req.query.p) : 1;
 
-        var collection = mongodb.get('cdr3g');
+        var collection = mongodb.get('cep3g_string');
         collection.count({}, function (err, count) {
             collection.find({}, //{/*limit: 20,*/ sort: {_id: -1}}, function (e, docs) {
                 {skip : (page - 1) * _pageunit,limit : _pageunit,sort : { _id : -1 }}, function (e, docs) {
