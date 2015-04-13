@@ -10,8 +10,8 @@ var agg_3g = db.cep3g_insert.aggregate([
               DATE:{ $substr: [ "$date_time", 0, 10 ] }
             , HOUR:{ $substr: [ "$date_time", 11, 2 ] }
 
-            , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
-            , DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 3 ] }//"$BTS_CODE" //地區
+            , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 3 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
+            , DISTRICT : { $substr: [ "$BTS_ADDRESS", 3, 9 ] }//"$BTS_CODE" //地區
             , SITE_NAME : "$SITE_NAME"
             , SITE_ID : "$SITE_ID"
 
@@ -32,7 +32,7 @@ var agg_3g = db.cep3g_insert.aggregate([
                 }
                 //site
                 , COUNTY: "$COUNTY" //縣市
-                // , DISTRICT: "$DISTRICT" //地區
+                , DISTRICT: "$DISTRICT" //地區
                 , SITE_NAME: "$SITE_NAME"
                 , SITE_ID: "$SITE_ID"
 

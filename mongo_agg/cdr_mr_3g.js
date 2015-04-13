@@ -1,5 +1,6 @@
-//HO_HANDOVER
-db.cep3g_insert.mapReduce(
+//mongo cdr cdr_mr_3g.js > ./cdr_mr_3g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
+print(new Date().toLocaleTimeString()+'\t3g mr start');
+var mr3g = db.cep3g_insert.mapReduce(
     function () {
         //var time= this.timestamp.substring(0,2);
         try {
@@ -101,7 +102,13 @@ db.cep3g_insert.mapReduce(
         out: "cdr3g_mapR"
     }
 );
+//mongo cdr cdr_mr_3g.js > ./cdr_mr_3g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 
+print(new Date().toLocaleTimeString()+'\t3g mr end');
+print(JSON.stringify(mr3g));
+//mr3g.forEach(function(doc){
+//    print(JSON.stringify(doc));
+//});
 //{
 //    "result" : "cdr3g_mapR",
 //    "timeMillis" : 12114,
@@ -126,13 +133,13 @@ db.cep3g_insert.mapReduce(
 //    "ok" : 1
 //}
 
-db.cep3g_insert.find({
-    "record_type": "1",
-    //"date_time": /^2014-12-22 2/,
-    "BTS_ADDRESS": "台北市中正區",
-    "SITE_NAME": "中正公園",
-    "SITE_ID": "100PS",
-    //"END_CODE": "0000",
-    "SIM_TYPE": "ISIM",
-    "CARRIER": "台灣大哥大"
-},{HANGOVER:1,orig_mcz_duration:1,term_mcz_duration:1});
+//db.cep3g_insert.find({
+//    "record_type": "1",
+//    //"date_time": /^2014-12-22 2/,
+//    "BTS_ADDRESS": "台北市中正區",
+//    "SITE_NAME": "中正公園",
+//    "SITE_ID": "100PS",
+//    //"END_CODE": "0000",
+//    "SIM_TYPE": "ISIM",
+//    "CARRIER": "台灣大哥大"
+//},{HANGOVER:1,orig_mcz_duration:1,term_mcz_duration:1});

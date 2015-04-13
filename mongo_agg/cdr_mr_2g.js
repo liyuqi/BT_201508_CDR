@@ -1,5 +1,6 @@
-//HO_HANDOVER
-db.cep2g_insert.mapReduce(
+//mongo cdr cdr_mr_2g.js > ./cdr_mr_2g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
+print(new Date().toLocaleTimeString()+'\t2g mr start');
+var mr2g = db.cep2g_insert.mapReduce(
     function () {
         //var time= this.timestamp.substring(0,2);
         try {
@@ -72,6 +73,7 @@ db.cep2g_insert.mapReduce(
 
         //save.SITE_ID = key._id.cellid + "-" + key._id.lacod;
         //doc.time = values.time;
+        //print(doc);
         return doc;
     },
     {
@@ -82,7 +84,12 @@ db.cep2g_insert.mapReduce(
         out: "cdr2g_mr"
     }
 );
-
+//mongo cdr cdr_mr_2g.js > ./cdr_mr_2g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
+print(new Date().toLocaleTimeString()+'\t2g mr end');
+print(JSON.stringify(mr2g));
+//mr2g.forEach(function(doc){
+//    print(JSON.stringify(doc));
+//});
 //{
 //    "result" : "cdr2g_mr",
 //    "timeMillis" : 9129,
