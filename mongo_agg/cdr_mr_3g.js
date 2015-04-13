@@ -8,7 +8,7 @@ var mr3g = db.cep3g_insert.mapReduce(
                 record_type: this.record_type
                 //, STATISTIC_DATE: new Date(this.time.getTime).substr(0,13)
                 , DATE: this.date_time.substr(0, 10)
-                , HOUR: this.date_time.substr(12, 2)
+                , HOUR: this.date_time.substr(11, 2)
                 , COUNTY: this.BTS_ADDRESS.substr(0, 3)
                 , DISTRICT: this.BTS_ADDRESS.substr(3, 3)
                 , SITE_NAME: this.SITE_NAME
@@ -99,7 +99,7 @@ var mr3g = db.cep3g_insert.mapReduce(
             //time: interval
             record_type:{$in:["1","2"]}
         },
-        out: "cdr3g_mapR"
+        out: "cdr3g_mr"
     }
 );
 //mongo cdr cdr_mr_3g.js > ./cdr_mr_3g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt

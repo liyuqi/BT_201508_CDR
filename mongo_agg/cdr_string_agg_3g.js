@@ -2,7 +2,8 @@
 //mongo cdr cdr_string_agg_3g.js > ./cdr_agg_3g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 print(new Date().toLocaleTimeString());
 var agg_3g = db.cep3g_insert.aggregate([
-        {$match: {/*time: interval,up_falg:1,*/
+        {$match: {
+        /*time: interval,up_falg:1,*/
             record_type:{$in:["1","2"]}
         }},
         {$project:{
@@ -10,12 +11,16 @@ var agg_3g = db.cep3g_insert.aggregate([
               DATE:{ $substr: [ "$date_time", 0, 10 ] }
             , HOUR:{ $substr: [ "$date_time", 11, 2 ] }
 
-            , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 3 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
-            , DISTRICT : { $substr: [ "$BTS_ADDRESS", 3, 9 ] }//"$BTS_CODE" //地區
+            //site
+            , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
+            , DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
             , SITE_NAME : "$SITE_NAME"
             , SITE_ID : "$SITE_ID"
 
-            //, VENDOR : "$VENDOR"            , MODEL : "$MODEL"
+            //phone_type
+            //, VENDOR : "$VENDOR"
+            // , MODEL : "$MODEL"
+
             , HANGOVER : 1
             , END_CODE : "$cause_for_termination"
             , SIM_TYPE : "$SIM_TYPE"
@@ -36,7 +41,9 @@ var agg_3g = db.cep3g_insert.aggregate([
                 , SITE_NAME: "$SITE_NAME"
                 , SITE_ID: "$SITE_ID"
 
-                //, VENDOR: "$VENDOR"                , MODEL: "$MODEL"
+                //phone_type
+                //, VENDOR: "$VENDOR"
+                //, MODEL: "$MODEL"
 
                 , END_CODE: "$END_CODE"
                 , SIM_TYPE: "$SIM_TYPE"
@@ -45,22 +52,27 @@ var agg_3g = db.cep3g_insert.aggregate([
             }
 
             ,HO_CALLED_COUNT:{$sum:"$HANGOVER"}
-            ,HO_CALLED_MINUTES:{$sum:"$CALLDURATION"}
+            ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
         }}
         ,{$project:{
             _id:0
             ,STATISTIC_DATE:"$_id.STATISTIC_DATE"
+            //site
             ,COUNTY : "$_id.COUNTY"
+            , DISTRICT: "$_id.DISTRICT"
             ,SITE_NAME : "$_id.SITE_NAME"
+
+            //phone_type
             //,VENDOR : "$_id.VENDOR"
             //,MODEL : "$_id.MODEL"
+
             ,SIM_TYPE : "$_id.SIM_TYPE"
             ,CARRIER : "$_id.CARRIER"
-            ,END_CODE: "$END_CODE"
+            ,END_CODE: "$_id.END_CODE"
             ,HO_CALLED_COUNT :1
-            ,HO_CALLED_MINUTES :1
+            ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
         }}
-        //,{    $out:"cdr2g_agg"}
+        //,{    $out:"cdr3g_agg"}
     ]
     //,{    explain: true}
     //,{    allowDiskUse: true}
@@ -68,7 +80,7 @@ var agg_3g = db.cep3g_insert.aggregate([
 );
 
 print(new Date().toLocaleTimeString());
-print(agg_3g.result.length);
-agg_3g.result.forEach(function(doc){
-    //print(JSON.stringify(doc));
-});
+//print(agg_3g.result.length);
+//agg_3g.result.forEach(function(doc){
+//    //print(JSON.stringify(doc));
+//});
