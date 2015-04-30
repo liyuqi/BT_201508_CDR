@@ -14,6 +14,7 @@ var sys_mongo = require('./routes/sys_mongo');
 var sys_alert = require('./routes/sys_alert');
 var cdr_mongo = require('./routes/cdr_mongo');
 var cdr_2g_mongo = require('./routes/cdr_2g_mongo');
+var cdr_gprs_mongo = require('./routes/cdr_gprs_mongo');
 
 var util = require('util');
 var http = require('http');
@@ -27,10 +28,10 @@ var MongoStore = require('connect-mongo')(express);
 var monk = require('monk');
 //var dbevents = monk('192.168.0.190/events');
 //var dbalerts = monk('192.168.0.190/alerts');
-var dbfluentd = monk('127.0.0.1/fluentd');
-//var dbfluentd = monk('172.17.24.196/fluentd');
-var dbCDR = monk('172.17.24.196:27017/cdr');
-//var dbCDR = monk('192.168.0.196:27017/cdr');
+//var dbfluentd = monk('127.0.0.1/fluentd');
+var dbfluentd = monk('192.168.0.196/fluentd');
+//var dbCDR = monk('172.17.24.196:27017/cdr');
+var dbCDR = monk('192.168.0.196:27017/cdr');
 //var dbCDR = monk('127.0.0.1:27017/cdr');
 
 
@@ -87,37 +88,52 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 //==================================================syslog============================
 //app.get('/sys_CRUD_index', sys_mongo.index);
-app.get('/sys_CRUD_insert', sys_mongo.index);
-app.post('/sys_CRUD_insert',sys_mongo.sys_CRUD_insert(dbfluentd));
-app.get('/sys_CRUD_query', 	sys_mongo.sys_CRUD_loglist(dbfluentd));
-app.post('/sys_CRUD_query', sys_mongo.sys_CRUD_query(dbfluentd));
-app.get('/sys_CRUD_show', 	sys_mongo.sys_CRUD_count(dbfluentd));
-//app.post('/sys_CRUD_show', 	sys_mongo.sys_CRUD_show(dbfluentd));
+//app.get('/sys_CRUD_insert', sys_mongo.index);
+//app.post('/sys_CRUD_insert',sys_mongo.sys_CRUD_insert(dbfluentd));
+//app.get('/sys_CRUD_query', 	sys_mongo.sys_CRUD_loglist(dbfluentd));
+//app.post('/sys_CRUD_query', sys_mongo.sys_CRUD_query(dbfluentd));
+//app.get('/sys_CRUD_show', 	sys_mongo.sys_CRUD_count(dbfluentd));
+////app.post('/sys_CRUD_show', 	sys_mongo.sys_CRUD_show(dbfluentd));
+//
+//app.get('/sys_ALERT_insert',	sys_alert.index);
+//app.post('/sys_ALERT_insert', 	sys_alert.sys_ALERT_insert(dbfluentd));
+////app.get('/sys_ALERT_list', 		sys_alert.sys_ALERT_count(dbfluentd));
+//app.get('/sys_ALERT_list', 		sys_alert.sys_ALERT_list(dbfluentd));
+////app.get('/sys_ALERT_display', 	sys_alert.sys_ALERT_loglist(dbfluentd));
+//app.get('/sys_ALERT_display', 	sys_alert.sys_ALERT_timeInterval(dbfluentd));
+//app.post('/sys_ALERT_display', 	sys_alert.sys_ALERT_timeInterval(dbfluentd));
+//app.get('/sys_ALERT_delete', 	sys_alert.sys_ALERT_delete(dbfluentd));
+////app.post('/sys_ALERT_display', 	sys_alert.sys_ALERT_query(dbfluentd));
+//app.use('/sys_ALERT_event', 	sys_alert.sys_ALERT_event(dbfluentd));
 
-app.get('/sys_ALERT_insert',	sys_alert.index);
-app.post('/sys_ALERT_insert', 	sys_alert.sys_ALERT_insert(dbfluentd));
-//app.get('/sys_ALERT_list', 		sys_alert.sys_ALERT_count(dbfluentd));
-app.get('/sys_ALERT_list', 		sys_alert.sys_ALERT_list(dbfluentd));
-//app.get('/sys_ALERT_display', 	sys_alert.sys_ALERT_loglist(dbfluentd));
-app.get('/sys_ALERT_display', 	sys_alert.sys_ALERT_timeInterval(dbfluentd));
-app.post('/sys_ALERT_display', 	sys_alert.sys_ALERT_timeInterval(dbfluentd));
-app.get('/sys_ALERT_delete', 	sys_alert.sys_ALERT_delete(dbfluentd));
-//app.post('/sys_ALERT_display', 	sys_alert.sys_ALERT_query(dbfluentd));
-app.use('/sys_ALERT_event', 	sys_alert.sys_ALERT_event(dbfluentd));
 
-
-//================================================= C D R ============================
+//================================================= C D R 3g ============================
 app.get('/cdr_CRUD_insert', cdr_mongo.index);
 //app.post('/cdr_CRUD_insert',cdr_mongo.cdr_CRUD_insert(dbCDR));
-app.get('/cdr_CRUD_query', 	cdr_mongo.cdr_CRUD_loglist(dbCDR));
-app.post('/cdr_CRUD_query', cdr_mongo.cdr_CRUD_query(dbCDR));
-app.get('/cdr_CRUD_show', 	cdr_mongo.cdr_CRUD_count(dbCDR));
+app.get('/cdr_CRUD_query', 		cdr_mongo.cdr_CRUD_loglist(dbCDR));
+app.post('/cdr_CRUD_query', 	cdr_mongo.cdr_CRUD_query(dbCDR));
+app.get('/cdr_CRUD_show', 		cdr_mongo.cdr_CRUD_count(dbCDR));
+app.get('/cdr_3g_site_query', 	cdr_mongo.cdr_3g_site_report(dbCDR));
+app.post('/cdr_3g_site_query', 	cdr_mongo.cdr_3g_site_query(dbCDR));
+//app.use('/cdr_3g_phone_report', cdr_mongo.cdr_3g_phone_report(dbCDR));
 
-app.get('/cdr_CRUD_2g_insert', cdr_mongo.index);
-//app.post('/cdr_CRUD_insert',cdr_mongo.cdr_CRUD_insert(dbCDR));
-app.get('/cdr_CRUD_2g_query', 	cdr_2g_mongo.cdr_CRUD_loglist(dbCDR));
-app.post('/cdr_CRUD_2g_query', cdr_2g_mongo.cdr_CRUD_query(dbCDR));
-app.get('/cdr_CRUD_2g_show', 	cdr_2g_mongo.cdr_CRUD_count(dbCDR));
+//================================================= C D R 2g
+//app.get('/cdr_CRUD_2g_insert', cdr_mongo.index);
+////app.post('/cdr_CRUD_insert',cdr_mongo.cdr_CRUD_insert(dbCDR));
+//app.get('/cdr_CRUD_2g_query', 	cdr_2g_mongo.cdr_CRUD_loglist(dbCDR));
+//app.post('/cdr_CRUD_2g_query', 	cdr_2g_mongo.cdr_CRUD_query(dbCDR));
+//app.get('/cdr_CRUD_2g_show', 	cdr_2g_mongo.cdr_CRUD_count(dbCDR));
+////app.get('/cdr_2g_site_report', 	cdr_2g_mongo.cdr_2g_site_query(dbCDR));
+//app.post('/cdr_2g_site_report', 	cdr_2g_mongo.cdr_2g_site_report(dbCDR));
+//app.use('/cdr_2g_phone_report', cdr_2g_mongo.cdr_2g_phone_report(dbCDR));
+
+//================================================= C D R gprs
+//app.get('/cdr_CRUD_gprs_insert', cdr_mongo.index);
+////app.post('/cdr_CRUD_insert',cdr_mongo.cdr_CRUD_insert(dbCDR));
+//app.get('/cdr_CRUD_gprs_query', 	cdr_gprs_mongo.cdr_CRUD_loglist(dbCDR));
+//app.post('/cdr_CRUD_gprs_query', 	cdr_gprs_mongo.cdr_CRUD_query(dbCDR));
+//app.get('/cdr_CRUD_gprs_show', 		cdr_gprs_mongo.cdr_CRUD_count(dbCDR));
+//app.use('/cdr_CRUD_gprs_flow', 		cdr_gprs_mongo.cdr_gprs_site_report(dbCDR));
 
 //app.post('/sys_CRUD_show', 	sys_mongo.sys_CRUD_show(dbfluentd));
 

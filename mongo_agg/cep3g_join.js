@@ -1,6 +1,6 @@
-//mongo cdr cdr_join_map_3g.js > c:\workspace\CDR0324\cdr_map_3g_result.txt
-//mongo cdr cdr_join_map_3g.js > ./cdr_map_3g_result.txt
-//mongo cdr cdr_join_map_3g.js > ./cdr_map_3g_result_$(date +"%H%M%S")_$(date +"%Y%m%d").txt
+//mongo cdr cep3g_join.js > c:\workspace\CDR0324\cep3g_join_result.txt
+//mongo cdr cep3g_join.js > ./cep3g_join_result.txt
+//mongo cdr --eval "var max_id=$_max_id, pick=$pick, i=$i;" cep3g_join.js > ./cep3g_join_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 var /*cdr3g,*/ phone_map = {}, site2g_map = {}, site3g_map = {}, SIM_map = {}, CARRIER_map = {};
 
 function buildPhoneMap(){
@@ -49,7 +49,7 @@ function buildSite3gMap(){
             BELONG_TO   : site.BELONG_TO,
             CELL_NO     : site.CELL_NO,     //cell
             LAC_OD      : site.LAC_OD,       //lac
-            BTS_ADDRESS : site.BTS_ADDRESS,
+            BTS_ADDRESS : site.BTS_ADDRESS
         };
         site3g_map[site.LAC_OD +'-'+ site.CELL_NO] = obj;
     });
@@ -105,13 +105,16 @@ function buildCARRIERmap(){
 var i=0;
 print(new Date().toLocaleTimeString()+'\tprocess:'+i);
 //var d = new Date();
-//var t1 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(),0,0,0);
-//var t0 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours()-1,0,0,0);
+//var t1 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(),30,0,0);
+//var t0 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours()-1,30,0,0);
 //var interval = {$gte:t0,$lt:t1}; //ISODate("2015-03-31T16:00:00Z")
 
 var cdr3g = db.cep3g_sample.find({
-    //time : interval
-    record_type:{$in:["1","2"]}
+//var cdr3g = db.cep3g_gen.find({
+//     date_time : {$in:[new RegExp('^'+)]}
+//    ,up_flag : {$nin:[1]}
+    _id:{$gt:max_id}
+    ,record_type:{$in:["1","2"]}
 },{
     "called_number" : 1             //substr(IMSI,0,8)['TWM','FET','CHT','ARTP','T_START','other','MTC']
     ,"called_imei" : 1              //#index phone MTC
@@ -136,7 +139,7 @@ var cdr3g = db.cep3g_sample.find({
     ,"date_time" : 1                //#index date, time
     ,"up_flag" : 1
     ,"_id":1
-}).forEach(function (doc) {
+}).skip(pick).limit(pick).forEach(function (doc) {
 //while(cdr3g.hasNext()){
     //var doc = col.next();
     if(doc.up_flag!=2) {  //======================================== update done, erich up_flag:1
@@ -197,11 +200,11 @@ var cdr3g = db.cep3g_sample.find({
             if  (doc.term_mcz_duration == null||""){doc.term_mcz_duration=0;}
             else{doc.term_mcz_duration = Number(doc.term_mcz_duration);}
 
-            print(new Date().toLocaleTimeString() + '\tMOC rt:' + doc.record_type +
-            '\t發cell:' + doc.calling_subs_last_lac +'-'+ doc.calling_subs_last_ci+ '  \tsite:' + doc.SITE_ID +
-            '\t發imsi:'+ doc.calling_imsi.substr(0,6)+ '\tSIM:'+ doc.SIM_TYPE +
-            '\t發imei:'+ doc.calling_imei.substr(0,8) + '\tPT:'+ doc.PT_OID +
-            '\tCARRIER:'+ doc.CARRIER + '\ted_num:'+ doc.called_number.substr(0,4));
+//            print(new Date().toLocaleTimeString() + '\tMOC rt:' + doc.record_type +
+//            '\t發cell:' + doc.calling_subs_last_lac +'-'+ doc.calling_subs_last_ci+ '  \tsite:' + doc.SITE_ID +
+//            '\t發imsi:'+ doc.calling_imsi.substr(0,6)+ '\tSIM:'+ doc.SIM_TYPE +
+//            '\t發imei:'+ doc.calling_imei.substr(0,8) + '\tPT:'+ doc.PT_OID +
+//            '\tCARRIER:'+ doc.CARRIER + '\ted_num:'+ doc.called_number.substr(0,4));
 
         }else if(doc.record_type=="2") {
             try {
@@ -261,18 +264,19 @@ var cdr3g = db.cep3g_sample.find({
             if  (doc.term_mcz_duration == null||""){doc.term_mcz_duration=0;}
             else{doc.term_mcz_duration = Number(doc.term_mcz_duration);}
 
-            print(new Date().toLocaleTimeString() + '\tMTC rt:' + doc.record_type +
-            '\t  cell:' + doc.called_subs_last_lac +'-'+ doc.called_subs_last_ci + '\tsite:' + doc.SITE_ID +
-            '\t  imsi:'+ doc.called_imsi.substr(0,6) + '\tSIM:'+ doc.SIM_TYPE +
-            '\t  imei:'+ doc.called_imei.substr(0,8) + '\tPT:' + doc.PT_OID+
-            '\tCARRIER:'+ doc.CARRIER +'\ted_num:'+ doc.called_number.substr(0,4));
+//            print(new Date().toLocaleTimeString() + '\tMTC rt:' + doc.record_type +
+//            '\t  cell:' + doc.called_subs_last_lac +'-'+ doc.called_subs_last_ci + '\tsite:' + doc.SITE_ID +
+//            '\t  imsi:'+ doc.called_imsi.substr(0,6) + '\tSIM:'+ doc.SIM_TYPE +
+//            '\t  imei:'+ doc.called_imei.substr(0,8) + '\tPT:' + doc.PT_OID+
+//            '\tCARRIER:'+ doc.CARRIER +'\ted_num:'+ doc.called_number.substr(0,4));
         }
         //doc.up_flag = 1; //======================================== update done, erich up_flag:1
-        db.cep3g_sample.update({_id: doc._id}, {$set: {up_flag:1}});
-        db.cep3g_insert.save(doc);
+        //db.cep3g_sample.update({_id: doc._id}, {$set: {up_flag:1}});
+//        db.cep3g_gen.update({_id: doc._id}, {$set: {up_flag:1}});
+        db.cep3g_join.save(doc);
     }else{}
     i++;
 });
 print(new Date().toLocaleTimeString()+'\tprocess:'+i);
-db.cep3g_sample.findOne({up_flag:1},{time:1,upflag:1});
-//mongo cdr cdr_join_map_3g.js > ./cdr_map_3g_result_$(date +"%H%M%S")_$(date +"%Y%m%d").txt
+db.cep3g_sample.findOne({up_flag:1},{time:1,up_flag:1});
+//mongo cdr cep3g_join.js > ./cep3g_join_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt

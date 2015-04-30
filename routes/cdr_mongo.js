@@ -2,14 +2,7 @@
  * Created by Yuqi on 2015/2/16.
  */
 /*** Created by Yuqi on 2015/1/21.
- * > db.logs.findOne()
- {
-         "_id" : ObjectId("54d966730778511cff000009"),
-         "identifier" : "%PIX-6-302005",
-         "message" : "Built UDP connection for faddr 198.207.223.240/53337 gaddr 10.0.0.187/53 laddr 192.168.0.2/53",
-         "TIMESTAMP" : "2015-02-10T10:01:23+08:00",             //寫入時間
-         "time" : ISODate("2004-03-29T01:54:18Z")               //syslog時間
- }
+ *
  */
 // var mongodb = require('../models/db.js');
 var util = require('util');
@@ -37,7 +30,7 @@ exports.index = function(req, res){
 
 exports.cdr_CRUD_loglist = function(mongodb){
     return function(req, res) {
-        var collection = mongodb.get('cep3g_string');
+        var collection = mongodb.get('cep3g_sample');
         collection.col.count({},function(err, count) {
             if(err) res.redirect('cdr_CRUD_query');
             //console.log(format("count = %s", count));
@@ -134,13 +127,13 @@ exports.cdr_CRUD_query = function(mongodb){
             res.redirect('cdr_CRUD_query');
 
         //query
-        var collection = mongodb.get('cep3g_string');
+        var collection = mongodb.get('cep3g_sample');
         collection.count({},function(err,db_count){
             collection.count(query, function (err, query_count) {
                 collection.find(query, {limit: _max_pageunit}, function (err, docs) {
                     if (docs.length) console.log('docs.length: ' + docs.length);
 
-                    res.render('cdr_CRUD_result', {
+                    res.render('cdr_CRUD_query', {
                             title: 'query cdr',
                             db_count: db_count,
                             totalcount: query_count,
@@ -159,7 +152,7 @@ exports.cdr_CRUD_count = function (mongodb) {
     return function (req, res) {
         //var page = req.query.p ? parseInt(req.query.p) : 1;
         console.log('cdr_count');
-        var collection = mongodb.get('cep3g_string');
+        var collection = mongodb.get('cep3g_sample');
         collection.count({},function(err,count){
             collection.find({}, {limit : _pageunit ,sort : { _id : -1 }} , function (err, docs) {
                 console.log('cdr: ',docs.length/*,JSON.stringify(docs[0])*/);
@@ -177,7 +170,7 @@ exports.cdr_CRUD_count = function (mongodb) {
 exports.cdr_CRUD_show = function (mongodb) {
     return function (req, res) {
         console.log('cdr_show');
-        var collection = mongodb.get('cep3g_string');
+        var collection = mongodb.get('cep3g_sample');
         collection.count({}, function (err, count) {
             collection.find({}, {limit: _pageunit, sort: {_id: -1}}, function (e, docs) {
                 // console.log("docs data : "+util.inspect(docs));
@@ -199,7 +192,7 @@ exports.cdr_CRUD_show_pagging = function (mongodb) {
     return function (req, res) {
         var page = req.query.p ? parseInt(req.query.p) : 1;
 
-        var collection = mongodb.get('cep3g_string');
+        var collection = mongodb.get('cep3g_sample');
         collection.count({}, function (err, count) {
             collection.find({}, //{/*limit: 20,*/ sort: {_id: -1}}, function (e, docs) {
                 {skip : (page - 1) * _pageunit,limit : _pageunit,sort : { _id : -1 }}, function (e, docs) {
@@ -221,173 +214,301 @@ exports.cdr_CRUD_show_pagging = function (mongodb) {
     };
 };
 
-exports.cdr_site_report = function(mongodb){
+exports.cdr_3g_site_report = function(mongodb){
     return function(req, res) {
-
-        var collection = mongodb.get('cep3g_insert');
-
-        console.log("flow : ");
-        collection.col.aggregate([
-            {$match: {
-                /*time: interval,up_falg:1,*/
-                record_type:{$in:["1","2"]}
-            }},
-            {$project:{
-                //STATISTIC_DATE : "$time"
-                DATE:{ $substr: [ "$date_time", 0, 10 ] }
-                , HOUR:{ $substr: [ "$date_time", 11, 2 ] }
-
-                //site
-                , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
-                , DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
-                , SITE_NAME : "$SITE_NAME"
-                , SITE_ID : "$SITE_ID"
-
-                //phone_type
-                //, VENDOR : "$VENDOR"
-                // , MODEL : "$MODEL"
-
-                , HANGOVER : 1
-                , END_CODE : "$cause_for_termination"
-                , SIM_TYPE : "$SIM_TYPE"
-                , CARRIER : "$CARRIER"
-
-                //, HO_CALLED_1 : 1
-                , CALLDURATION : {$add:["$orig_mcz_duration","$term_mcz_duration"]}
-            }},
-            {$group:{
-                _id: {
-                    STATISTIC_DATE: {
-                        DATE : "$DATE"
-                        , HOUR: "$HOUR"
-                    }
-                    //site
-                    , COUNTY: "$COUNTY" //縣市
-                    , DISTRICT: "$DISTRICT" //地區
-                    , SITE_NAME: "$SITE_NAME"
-                    , SITE_ID: "$SITE_ID"
-
-                    //phone_type
-                    //, VENDOR: "$VENDOR"                , MODEL: "$MODEL"
-
-                    , END_CODE: "$END_CODE"
-                    , SIM_TYPE: "$SIM_TYPE"
-                    , CARRIER: "$CARRIER"
-                    //, IMEI: "$IMEI"
-                }
-
-                ,HO_CALLED_COUNT:{$sum:"$HANGOVER"}
-                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
-            }}
-            ,{$project:{
-                _id:0
-                ,STATISTIC_DATE:"$_id.STATISTIC_DATE"
-                //site
-                ,COUNTY : "$_id.COUNTY"
-                , DISTRICT: "$_id.DISTRICT"
-                ,SITE_NAME : "$_id.SITE_NAME"
-
-                //phone_type
-                //,VENDOR : "$_id.VENDOR"
-                //,MODEL : "$_id.MODEL"
-
-                ,SIM_TYPE : "$_id.SIM_TYPE"
-                ,CARRIER : "$_id.CARRIER"
-                ,END_CODE: "$END_CODE"
-                ,HO_CALLED_COUNT :1
-                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
-            }}
-            //,{    $out:"cdr3g_agg"}
-        ], function(err, result) {
-            if(err) console.log("err : "+err.message);
-            console.log("result : "+util.inspect(result));
-            res.render('cdr_site_report', {title: 'flow', result: result });
+        var collection = mongodb.get('cep3g_agg');
+        collection.col.count({},function(err, count) {
+            if(err) res.redirect('cdr_3g_site_query');
+            //console.log(format("count = %s", count));
+            res.render('cdr_3g_site_query', {title: 'cdr', totalcount : count,resp :null});
         });
     };
 };
 
-exports.cdr_phone_report = function(mongodb){
+
+exports.cdr_3g_site_query = function(mongodb){
     return function(req, res) {
 
-        var collection = mongodb.get('cep3g_insert');
+        //field input
+        var query = {_id:null};
 
-        console.log("flow : ");
-        collection.col.aggregate([
-            {$match: {
-                /*time: interval,up_falg:1,*/
-                record_type:{$in:["1","2"]}
-            }},
-            {$project:{
-                //STATISTIC_DATE : "$time"
-                DATE:{ $substr: [ "$date_time", 0, 10 ] }
-                , HOUR:{ $substr: [ "$date_time", 11, 2 ] }
+        if(req.body.DATE){
+            query._id.DATE = req.body.DATE.trim();
+        }
+        if(req.body.HOUR){
+            query._id.HOUR = req.body.HOUR.trim();
+        }
+        if(req.body.COUNTY){
+            query._id.COUNTY = req.body.COUNTY.trim();
+        }
+        if(req.body.DISTRICT){
+            query._id.DISTRICT = req.body.DISTRICT.trim();
+        }
+        if(req.body.SITE_NAME){
+            query._id.SITE_NAME = req.body.SITE_NAME.trim();
+        }
+        if(req.body.SITE_ID){
+            query._id.SITE_ID = req.body.SITE_ID.trim();
+        }
+        if(req.body.END_CODE){
+            query._id.END_CODE = req.body.END_CODE.trim();
+        }
+        if(req.body.SIM_TYPE){
+            query._id.SIM_TYPE = req.body.SIM_TYPE.trim();
+        }
+        if(req.body.CARRIER){
+            query._id.CARRIER = req.body.CARRIER.trim();
+        }
 
-                //site
-                //, COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
-                //, DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
-                //, SITE_NAME : "$SITE_NAME"
-                //, SITE_ID : "$SITE_ID"
+        console.log(util.inspect(query));
 
-                //phone_type
-                , VENDOR : "$VENDOR"
-                , MODEL : "$MODEL"
+        var keys = [];
+        for(var k in query) keys.push(k);
 
-                , HANGOVER : 1
-                , END_CODE : "$cause_for_termination"
-                , SIM_TYPE : "$SIM_TYPE"
-                , CARRIER : "$CARRIER"
+        if(keys.length==0)
+            res.redirect('cdr_3g_site_query');
 
-                //, HO_CALLED_1 : 1
-                , CALLDURATION : {$add:["$orig_mcz_duration","$term_mcz_duration"]}
-            }},
-            {$group:{
-                _id: {
-                    STATISTIC_DATE: {
-                        DATE : "$DATE"
-                        , HOUR: "$HOUR"
-                    }
-                    //site
-                    //, COUNTY: "$COUNTY" //縣市
-                    //, DISTRICT: "$DISTRICT" //地區
-                    //, SITE_NAME: "$SITE_NAME"
-                    //, SITE_ID: "$SITE_ID"
+        //query
+        var collection = mongodb.get('cep3g_agg');
+        collection.count({},function(err,db_count){
+            collection.count(query, function (err, query_count) {
+                collection.find(query, {limit: _max_pageunit}, function (err, docs) {
+                    if (docs.length) console.log('docs.length: ' + docs.length);
 
-                    //phone_type
-                    , VENDOR: "$VENDOR"
-                    , MODEL: "$MODEL"
-
-                    , END_CODE: "$END_CODE"
-                    , SIM_TYPE: "$SIM_TYPE"
-                    , CARRIER: "$CARRIER"
-                    //, IMEI: "$IMEI"
-                }
-
-                ,HO_CALLED_COUNT:{$sum:"$HANGOVER"}
-                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
-            }}
-            ,{$project:{
-                _id:1
-                //,STATISTIC_DATE:"$_id.STATISTIC_DATE"
-                //site
-                //,COUNTY : "$_id.COUNTY"
-                //, DISTRICT: "$_id.DISTRICT"
-                //,SITE_NAME : "$_id.SITE_NAME"
-
-                //phone_type
-                //,VENDOR : "$_id.VENDOR"
-                //,MODEL : "$_id.MODEL"
-
-                //,SIM_TYPE : "$_id.SIM_TYPE"
-                //,CARRIER : "$_id.CARRIER"
-                //,END_CODE: "$_id.END_CODE"
-                ,HO_CALLED_COUNT :1
-                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
-            }}
-            //,{    $out:"cdr3g_agg"}
-        ], function(err, result) {
-            if(err) console.log("err : "+err.message);
-            console.log("result : "+util.inspect(result));
-            res.render('cdr_phone_report', {title: 'flow', result: result });
+                    res.render('cdr_3g_site_query', {
+                            title: 'query cep3g',
+                            db_count: db_count,
+                            totalcount: query_count,
+                            //page_count:docs.length,
+                            resp: docs
+                        }
+                    );
+                    //if (err) res.redirect('cdr_CRUD_query');
+                });
+            });
         });
     };
 };
+
+//exports.cdr_3g_site_report = function(mongodb){
+//    return function(req, res) {
+//
+//        //query
+//        var collection = mongodb.get('cep3g_agg');
+//        collection.count({},function(err,db_count){
+//            collection.count({}, function (err, query_count) {
+//                collection.find({}, {limit: _max_pageunit}, function (err, docs) {
+//                    if (docs.length) console.log('docs.length: ' + docs.length);
+//
+//                    res.render('cdr_3g_site_report', {
+//                        title: 'cep3g site',
+//                        db_count: db_count,
+//                        totalcount: query_count,
+//                        //page_count:docs.length,
+//                        resp: docs
+//                    });
+//                    //if (err) res.redirect('cdr_CRUD_query');
+//                });
+//            });
+//        });
+//    };
+//};
+
+exports.cdr_3g_phone_report = function(mongodb){
+    return function(req, res) {
+
+        //query
+        var collection = mongodb.get('cep3g_agg');
+        collection.count({},function(err,db_count){
+            collection.count({}, function (err, query_count) {
+                collection.find({}, {limit: _max_pageunit}, function (err, docs) {
+                    if (docs.length) console.log('docs.length: ' + docs.length);
+
+                    res.render('cdr_3g_phone_report', {
+                        title: 'cep3g phone',
+                        db_count: db_count,
+                        totalcount: query_count,
+                        //page_count:docs.length,
+                        resp: docs
+                    });
+                    //if (err) res.redirect('cdr_CRUD_query');
+                });
+            });
+        });
+    };
+};
+
+//exports.cdr_3g_site_report = function(mongodb){
+//    return function(req, res) {
+//
+//        var collection = mongodb.get('cep3g_join');
+//        var i =0;
+//        console.log("site2g : ");
+//        collection.col.aggregate([
+//            {$match: {
+//                /*time: interval,up_falg:1,*/
+//                record_type:{$in:["1","2"]}
+//                //,SITE_ID: '71778'
+//            }}
+//            ,{$project:{
+//                //STATISTIC_DATE : "$time"
+//                DATE:{ $substr: [ "$date_time", 0, 10 ] }
+//                , HOUR:{ $substr: [ "$date_time", 11, 2 ] }
+//
+//                //site
+//                , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
+//                , DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
+//                , SITE_NAME : "$SITE_NAME"
+//                , SITE_ID : "$SITE_ID"
+//
+//                ////phone_type
+//                //, VENDOR : "$VENDOR"
+//                // , MODEL : "$MODEL"
+//
+//                , HANGOVER : 1
+//                , END_CODE : "$cause_for_termination"
+//                , SIM_TYPE : "$SIM_TYPE"
+//                , CARRIER : "$CARRIER"
+//
+//                //, HO_CALLED_1 : 1
+//                , CALLDURATION : {$add:["$orig_mcz_duration","$term_mcz_duration"]}
+//            }}
+//            ,{$group:{
+//                _id: {
+//                    STATISTIC_DATE: {
+//                        DATE : "$DATE"
+//                        , HOUR: "$HOUR"
+//                    }
+//                    //site
+//                    , COUNTY: "$COUNTY" //縣市
+//                    , DISTRICT: "$DISTRICT" //地區
+//                    , SITE_NAME: "$SITE_NAME"
+//                    , SITE_ID: "$SITE_ID"
+//
+//                    ////phone_type
+//                    //, VENDOR: "$VENDOR"
+//                    //, MODEL: "$MODEL"
+//
+//                    , END_CODE: "$END_CODE"
+//                    , SIM_TYPE: "$SIM_TYPE"
+//                    , CARRIER: "$CARRIER"
+//                    //, IMEI: "$IMEI"
+//                }
+//
+//                ,HO_CALLED_COUNT:{$sum:"$HANGOVER"}
+//                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
+//            }}
+//            ,{$project:{
+//                _id:1
+//                //,STATISTIC_DATE:"$_id.STATISTIC_DATE"
+//                ////site
+//                //,COUNTY : "$_id.COUNTY"
+//                //, DISTRICT: "$_id.DISTRICT"
+//                //,SITE_NAME : "$_id.SITE_NAME"
+//
+//                ////phone_type
+//                //,VENDOR : "$_id.VENDOR"
+//                //,MODEL : "$_id.MODEL"
+//
+//                //,SIM_TYPE : "$_id.SIM_TYPE"
+//                //,CARRIER : "$_id.CARRIER"
+//                //,END_CODE: "$_id.END_CODE"
+//                ,HO_CALLED_COUNT :1
+//                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
+//            }}
+//            //,{    $out:"cdr3g_agg"}
+//        ], function(err, result) {
+//            i++;
+//            if(err) res.redirect('cdr_CRUD_3g_show');//console.log("err : "+err.message);
+//            if(i==5) console.log("result : "+util.inspect(result));
+//            res.render('cdr_3g_site_report', {title: 'flow', resp: result });
+//        });
+//    };
+//};
+//
+//exports.cdr_3g_phone_report = function(mongodb){
+//    return function(req, res) {
+//
+//        var collection = mongodb.get('cep3g_join');
+//        var i=0;
+//        console.log("phone2g : ");
+//        collection.col.aggregate([
+//            {$match: {
+//                /*time: interval,up_falg:1,*/
+//                record_type:{$in:["1","2"]}
+//            }}
+//            ,{$project:{
+//                //STATISTIC_DATE : "$time"
+//                DATE:{ $substr: [ "$date_time", 0, 10 ] }
+//                , HOUR:{ $substr: [ "$date_time", 11, 2 ] }
+//
+//                ////site
+//                //, COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市3 zh zhar
+//                //, DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
+//                //, SITE_NAME : "$SITE_NAME"
+//                //, SITE_ID : "$SITE_ID"
+//
+//                //phone_type
+//                , VENDOR : "$VENDOR"
+//                , MODEL : "$MODEL"
+//
+//                , HANGOVER : 1
+//                , END_CODE : "$cause_for_termination"
+//                , SIM_TYPE : "$SIM_TYPE"
+//                , CARRIER : "$CARRIER"
+//
+//                //, HO_CALLED_1 : 1
+//                , CALLDURATION : {$add:["$orig_mcz_duration","$term_mcz_duration"]}
+//            }}
+//            ,{$group:{
+//                _id: {
+//                    STATISTIC_DATE: {
+//                        DATE : "$DATE"
+//                        , HOUR: "$HOUR"
+//                    }
+//                    ////site
+//                    //, COUNTY: "$COUNTY" //縣市
+//                    //, DISTRICT: "$DISTRICT" //地區
+//                    //, SITE_NAME: "$SITE_NAME"
+//                    //, SITE_ID: "$SITE_ID"
+//
+//                    //phone_type
+//                    , VENDOR: "$VENDOR"
+//                    , MODEL: "$MODEL"
+//
+//                    , END_CODE: "$END_CODE"
+//                    , SIM_TYPE: "$SIM_TYPE"
+//                    , CARRIER: "$CARRIER"
+//                    //, IMEI: "$IMEI"
+//                }
+//
+//                ,HO_CALLED_COUNT:{$sum:"$HANGOVER"}
+//                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
+//            }}
+//            ,{$project:{
+//                _id:1
+//                //,STATISTIC_DATE:"$_id.STATISTIC_DATE"
+//                ////site
+//                //,COUNTY : "$_id.COUNTY"
+//                //, DISTRICT: "$_id.DISTRICT"
+//                //,SITE_NAME : "$_id.SITE_NAME"
+//
+//                ////phone_type
+//                //,VENDOR : "$_id.VENDOR"
+//                //,MODEL : "$_id.MODEL"
+//
+//                //,SIM_TYPE : "$_id.SIM_TYPE"
+//                //,CARRIER : "$_id.CARRIER"
+//                //,END_CODE: "$_id.END_CODE"
+//                ,HO_CALLED_COUNT :1
+//                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
+//            }}
+//            //,{    $out:"cdr3g_agg"}
+//        ], function(err, result) {
+//            i++;
+//            if(err) res.redirect('cdr_CRUD_3g_show');//console.log("err : "+err.message);
+//            if(i==5) console.log("result : "+util.inspect(result));
+//            res.render('cdr_3g_phone_report', {title: 'flow', resp: result });
+//        });
+//    };
+//};

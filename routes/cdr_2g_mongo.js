@@ -2,14 +2,7 @@
  * Created by Yuqi on 2015/2/16.
  */
 /*** Created by Yuqi on 2015/1/21.
- * > db.logs.findOne()
- {
-         "_id" : ObjectId("54d966730778511cff000009"),
-         "identifier" : "%PIX-6-302005",
-         "message" : "Built UDP connection for faddr 198.207.223.240/53337 gaddr 10.0.0.187/53 laddr 192.168.0.2/53",
-         "TIMESTAMP" : "2015-02-10T10:01:23+08:00",             //寫入時間
-         "time" : ISODate("2004-03-29T01:54:18Z")               //syslog時間
- }
+ *
  */
 // var mongodb = require('../models/db.js');
 var util = require('util');
@@ -36,7 +29,7 @@ exports.index = function(req, res){
 
 exports.cdr_CRUD_loglist = function(mongodb){
     return function(req, res) {
-        var collection = mongodb.get('cep2g_string');
+        var collection = mongodb.get('cep2g_sample');
         collection.col.count({},function(err, count) {
             if(err) res.redirect('cdr_CRUD_2g_query');
             //console.log(format("count = %s", count));
@@ -141,7 +134,7 @@ exports.cdr_CRUD_query = function(mongodb){
         if(keys.length==0)
             res.redirect('/cdr_CRUD_2g_query');
         //query
-        var collection = mongodb.get('cep2g_string');
+        var collection = mongodb.get('cep2g_sample');
         collection.count({},function(err,db_count){
             collection.count(query, function (err, query_count) {
                 collection.find(query, {limit: _max_pageunit}, function (err, docs) {
@@ -165,10 +158,10 @@ exports.cdr_CRUD_count = function (mongodb) {
     return function (req, res) {
         //var page = req.query.p ? parseInt(req.query.p) : 1;
         console.log('cdr_count');
-        var collection = mongodb.get('cep2g_string');
+        var collection = mongodb.get('cep2g_sample');
         collection.count({},function(err,count){
             collection.find({}, {limit : _pageunit ,sort : { _id : -1 }} , function (err, docs) {
-                console.log('cdr: ',docs.length/*,JSON.stringify(docs[0])*/);
+                //console.log('cdr: ',docs.length/*,JSON.stringify(docs[0])*/);
                 if (err) res.redirect('cdr_CRUD_2g_show');
                 res.render('cdr_CRUD_2g_show', {
                     title: 'cdr',
@@ -183,7 +176,7 @@ exports.cdr_CRUD_count = function (mongodb) {
 exports.cdr_CRUD_show = function (mongodb) {
     return function (req, res) {
         console.log('cdr_show');
-        var collection = mongodb.get('cep2g_string');
+        var collection = mongodb.get('cep2g_sample');
         collection.count({}, function (err, count) {
             collection.find({}, {limit: _pageunit, sort: {_id: -1}}, function (e, docs) {
                 // console.log("docs data : "+util.inspect(docs));
@@ -205,7 +198,7 @@ exports.cdr_CRUD_show_pagging = function (mongodb) {
     return function (req, res) {
         var page = req.query.p ? parseInt(req.query.p) : 1;
 
-        var collection = mongodb.get('cep2g_string');
+        var collection = mongodb.get('cep2g_sample');
         collection.count({}, function (err, count) {
             collection.find({}, //{/*limit: 20,*/ sort: {_id: -1}}, function (e, docs) {
                 {skip : (page - 1) * _pageunit,limit : _pageunit,sort : { _id : -1 }}, function (e, docs) {
@@ -227,170 +220,220 @@ exports.cdr_CRUD_show_pagging = function (mongodb) {
     };
 };
 
-exports.cdr_site_report = function(mongodb){
+//exports.cdr_2g_site_report = function(mongodb){
+//    return function(req, res) {
+//
+//        var collection = mongodb.get('cep2g_join');
+//        var i =0;
+//        console.log("flow : ");
+//        collection.col.aggregate([
+//            {$match: {
+//                /*time: interval,up_falg:1,*/
+//                CALLTRANSACTIONTYPE:{$in:['1','2']}
+//            }}
+//            ,{$project:{
+//                //time:1,
+//                //STATISTIC_DATE : "$time"
+//                DATE: "$STARTOFCHARGINGDATE"
+//                , HOUR: {$substr:["$TIMESTAMP",0,2]}
+//
+//                //site
+//                , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市
+//                , DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
+//                , SITE_NAME : "$SITE_NAME"
+//                , SITE_ID : "$SITE_ID"
+//
+//                ////phone_type
+//                //, VENDOR : "$VENDOR"
+//                //, MODEL : "$MODEL"
+//
+//                , END_CODE : "$CAUSEFORTERMINATION"
+//                , SIM_TYPE : "$SIM_TYPE"
+//                , CARRIER : "$CARRIER"
+//                //, HO_CALLED_1 : 1
+//                , CALLDURATION : "$CALLDURATION"
+//            }}
+//            ,{$group:{
+//                _id: {
+//                    STATISTIC_DATE: {
+//                        DATE : "$DATE"
+//                        , HOUR : "$HOUR"
+//                    }
+//                    //site
+//                    , COUNTY: "$COUNTY" //縣市
+//                    , DISTRICT: "$DISTRICT" //地區
+//                    , SITE_NAME: "$SITE_NAME"
+//                    , SITE_ID: "$SITE_ID"
+//
+//                    ////phone_type
+//                    //, VENDOR: "$VENDOR"
+//                    //, MODEL: "$MODEL"
+//
+//                    , END_CODE: "$END_CODE"
+//                    , SIM_TYPE: "$SIM_TYPE"
+//                    , CARRIER: "$CARRIER"
+//                    //, IMEI: "$IMEI"
+//                }
+//
+//                ,HO_CALLED_COUNT:{$sum:1}
+//                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
+//            }}
+//            ,{$project:{
+//                _id:1
+//                //,STATISTIC_DATE:"$_id.STATISTIC_DATE"
+//
+//                ////site
+//                //,COUNTY : "$_id.COUNTY"
+//                //,SITE_NAME : "$_id.SITE_NAME"
+//
+//                ////phone_type
+//                //,VENDOR : "$_id.VENDOR"
+//                //,MODEL : "$_id.MODEL"
+//
+//                //,SIM_TYPE : "$_id.SIM_TYPE"
+//                //,CARRIER : "$_id.CARRIER"
+//                ,HO_CALLED_COUNT :1
+//                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
+//            }}
+//            //,{    $out:"cdr2g_agg"}
+//        ], function(err, result) {
+//            i++
+//            if(err) res.redirect('cdr_CRUD_2g_show');//console.log("err : "+err.message);
+//            if(i==5) console.log("result : "+util.inspect(result));
+//            res.render('cdr_2g_site_report', {title: 'flow', resp: result });
+//        });
+//    };
+//};
+//
+//exports.cdr_2g_phone_report = function(mongodb){
+//    return function(req, res) {
+//
+//        var collection = mongodb.get('cep2g_join');
+//        var i =0;
+//        console.log("flow : ");
+//        collection.col.aggregate([
+//            {$match: {
+//                /*time: interval,up_falg:1,*/
+//                CALLTRANSACTIONTYPE:{$in:['1','2']}
+//            }}
+//            ,{$project:{
+//                //time:1,
+//                //STATISTIC_DATE : "$time"
+//                DATE: "$STARTOFCHARGINGDATE"
+//                , HOUR: {$substr:["$TIMESTAMP",0,2]}
+//
+//                ////site
+//                //, COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市
+//                //, DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
+//                //, SITE_NAME : "$SITE_NAME"
+//                //, SITE_ID : "$SITE_ID"
+//
+//                //phone_type
+//                , VENDOR : "$VENDOR"
+//                , MODEL : "$MODEL"
+//
+//                , END_CODE : "$CAUSEFORTERMINATION"
+//                , SIM_TYPE : "$SIM_TYPE"
+//                , CARRIER : "$CARRIER"
+//                //, HO_CALLED_1 : 1
+//                , CALLDURATION : "$CALLDURATION"
+//            }}
+//            ,{$group:{
+//                _id: {
+//                    STATISTIC_DATE: {
+//                        DATE : "$DATE"
+//                        , HOUR : "$HOUR"
+//                    }
+//                    //site
+//                    //, COUNTY: "$COUNTY" //縣市
+//                    //, DISTRICT: "$DISTRICT" //地區
+//                    //, SITE_NAME: "$SITE_NAME"
+//                    //, SITE_ID: "$SITE_ID"
+//
+//                    //phone_type
+//                    , VENDOR: "$VENDOR"
+//                    , MODEL: "$MODEL"
+//
+//                    , END_CODE: "$END_CODE"
+//                    , SIM_TYPE: "$SIM_TYPE"
+//                    , CARRIER: "$CARRIER"
+//                    //, IMEI: "$IMEI"
+//                }
+//
+//                ,HO_CALLED_COUNT:{$sum:1}
+//                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
+//            }}
+//            ,{$project:{
+//                _id:1
+//                //,STATISTIC_DATE:"$_id.STATISTIC_DATE"
+//
+//                ////site
+//                //,COUNTY : "$_id.COUNTY"
+//                //,SITE_NAME : "$_id.SITE_NAME"
+//
+//                ////phone_type
+//                //,VENDOR : "$_id.VENDOR"
+//                //,MODEL : "$_id.MODEL"
+//
+//                //,SIM_TYPE : "$_id.SIM_TYPE"
+//                //,CARRIER : "$_id.CARRIER"
+//                ,HO_CALLED_COUNT :1
+//                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
+//            }}
+//            //,{    $out:"cdr2g_agg"}
+//        ], function(err, result) {
+//            i++;
+//            if(err) res.redirect('cdr_CRUD_2g_show');//console.log("err : "+err.message);
+//            if(i==5) console.log("result : "+util.inspect(result));
+//            res.render('cdr_2g_phone_report', {title: 'flow', resp: result });
+//        });
+//    };
+//};
+
+exports.cdr_2g_site_report = function(mongodb){
     return function(req, res) {
 
-        var collection = mongodb.get('cep2g_insert');
+        //query
+        var collection = mongodb.get('cep2g_mr');
+        collection.count({},function(err,db_count){
+            collection.count({}, function (err, query_count) {
+                collection.find({}, {limit: _max_pageunit}, function (err, docs) {
+                    if (docs.length) console.log('docs.length: ' + docs.length);
 
-        console.log("flow : ");
-        collection.col.aggregate([
-            {$match: {
-                /*time: interval,up_falg:1,*/
-                CALLTRANSACTIONTYPE:{$in:['1','2']}
-            }},
-            {$project:{
-                //time:1,
-                //STATISTIC_DATE : "$time"
-                DATE: "$STARTOFCHARGINGDATE"
-                , HOUR: {$substr:["$TIMESTAMP",0,2]}
-
-                //site
-                , COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市
-                , DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
-                , SITE_NAME : "$SITE_NAME"
-                , SITE_ID : "$SITE_ID"
-
-                //phone_type
-                //, VENDOR : "$VENDOR"
-                //, MODEL : "$MODEL"
-
-                , END_CODE : "$CAUSEFORTERMINATION"
-                , SIM_TYPE : "$SIM_TYPE"
-                , CARRIER : "$CARRIER"
-                //, HO_CALLED_1 : 1
-                , CALLDURATION : "$CALLDURATION"
-            }},
-            {$group:{
-                _id: {
-                    STATISTIC_DATE: {
-                        DATE : "$DATE"
-                        , HOUR : "$HOUR"
-                    }
-                    //site
-                    , COUNTY: "$COUNTY" //縣市
-                    , DISTRICT: "$DISTRICT" //地區
-                    , SITE_NAME: "$SITE_NAME"
-                    , SITE_ID: "$SITE_ID"
-
-                    //phone_type
-                    //, VENDOR: "$VENDOR"
-                    //, MODEL: "$MODEL"
-
-                    , END_CODE: "$END_CODE"
-                    , SIM_TYPE: "$SIM_TYPE"
-                    , CARRIER: "$CARRIER"
-                    //, IMEI: "$IMEI"
-                }
-
-                ,HO_CALLED_COUNT:{$sum:1}
-                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
-            }}
-            ,{$project:{
-                _id:0
-                ,STATISTIC_DATE:"$_id.STATISTIC_DATE"
-
-                //site
-                ,COUNTY : "$_id.COUNTY"
-                ,SITE_NAME : "$_id.SITE_NAME"
-
-                //phone_type
-                //,VENDOR : "$_id.VENDOR"
-                //,MODEL : "$_id.MODEL"
-
-                ,SIM_TYPE : "$_id.SIM_TYPE"
-                ,CARRIER : "$_id.CARRIER"
-                ,HO_CALLED_COUNT :1
-                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
-            }}
-            //,{    $out:"cdr2g_agg"}
-        ], function(err, result) {
-            if(err) console.log("err : "+err.message);
-            console.log("result : "+util.inspect(result));
-            res.render('cdr_site_report', {title: 'flow', result: result });
+                    res.render('cdr_2g_site_report', {
+                        title: 'cep2g site',
+                        db_count: db_count,
+                        totalcount: query_count,
+                        //page_count:docs.length,
+                        resp: docs
+                    });
+                    //if (err) res.redirect('cdr_CRUD_query');
+                });
+            });
         });
     };
 };
 
-exports.cdr_phone_report = function(mongodb){
+exports.cdr_2g_phone_report = function(mongodb){
     return function(req, res) {
 
-        var collection = mongodb.get('cep2g_insert');
+        //query
+        var collection = mongodb.get('cep2g_mr');
+        collection.count({},function(err,db_count){
+            collection.count({}, function (err, query_count) {
+                collection.find({}, {limit: _max_pageunit}, function (err, docs) {
+                    if (docs.length) console.log('docs.length: ' + docs.length);
 
-        console.log("flow : ");
-        collection.col.aggregate([
-            {$match: {
-                /*time: interval,up_falg:1,*/
-                CALLTRANSACTIONTYPE:{$in:['1','2']}
-            }},
-            {$project:{
-                //time:1,
-                //STATISTIC_DATE : "$time"
-                DATE: "$STARTOFCHARGINGDATE"
-                , HOUR: {$substr:["$TIMESTAMP",0,2]}
-
-                //site
-                //, COUNTY : { $substr: [ "$BTS_ADDRESS", 0, 9 ] }//"$BTS_ADDRESS" //縣市
-                //, DISTRICT : { $substr: [ "$BTS_ADDRESS", 9, 9 ] }//"$BTS_CODE" //地區
-                //, SITE_NAME : "$SITE_NAME"
-                //, SITE_ID : "$SITE_ID"
-
-                //phone_type
-                , VENDOR : "$VENDOR"
-                , MODEL : "$MODEL"
-
-                , END_CODE : "$CAUSEFORTERMINATION"
-                , SIM_TYPE : "$SIM_TYPE"
-                , CARRIER : "$CARRIER"
-                //, HO_CALLED_1 : 1
-                , CALLDURATION : "$CALLDURATION"
-            }},
-            {$group:{
-                _id: {
-                    STATISTIC_DATE: {
-                        DATE : "$DATE"
-                        , HOUR : "$HOUR"
-                    }
-                    //site
-                    //, COUNTY: "$COUNTY" //縣市
-                    //, DISTRICT: "$DISTRICT" //地區
-                    //, SITE_NAME: "$SITE_NAME"
-                    //, SITE_ID: "$SITE_ID"
-
-                    //phone_type
-                    , VENDOR: "$VENDOR"
-                    , MODEL: "$MODEL"
-
-                    , END_CODE: "$END_CODE"
-                    , SIM_TYPE: "$SIM_TYPE"
-                    , CARRIER: "$CARRIER"
-                    //, IMEI: "$IMEI"
-                }
-
-                ,HO_CALLED_COUNT:{$sum:1}
-                ,HO_CALLED_SECOND:{$sum:"$CALLDURATION"}
-            }}
-            ,{$project:{
-                _id:0
-                ,STATISTIC_DATE:"$_id.STATISTIC_DATE"
-
-                //site
-                //,COUNTY : "$_id.COUNTY"
-                //,SITE_NAME : "$_id.SITE_NAME"
-
-                //phone_type
-                ,VENDOR : "$_id.VENDOR"
-                ,MODEL : "$_id.MODEL"
-
-                ,SIM_TYPE : "$_id.SIM_TYPE"
-                ,CARRIER : "$_id.CARRIER"
-                ,HO_CALLED_COUNT :1
-                ,HO_CALLED_MINUTES :{$divide:["$HO_CALLED_SECOND",60]}
-            }}
-            //,{    $out:"cdr2g_agg"}
-        ], function(err, result) {
-            if(err) console.log("err : "+err.message);
-            console.log("result : "+util.inspect(result));
-            res.render('cdr_phone_report', {title: 'flow', result: result });
+                    res.render('cdr_2g_phone_report', {
+                        title: 'cep2g phone',
+                        db_count: db_count,
+                        totalcount: query_count,
+                        //page_count:docs.length,
+                        resp: docs
+                    });
+                    //if (err) res.redirect('cdr_CRUD_query');
+                });
+            });
         });
     };
 };

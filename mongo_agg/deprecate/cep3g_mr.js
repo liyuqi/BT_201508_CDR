@@ -1,6 +1,7 @@
-//mongo cdr cdr_mr_3g.js > ./cdr_mr_3g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
+// mongo --port 40000 cdr cep3g_mr.js   > ~/fluentd/agg/log/cep3g_mr.txt
+//mongo cdr cep3g_mr.js > ./cep3g_mr_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 print(new Date().toLocaleTimeString()+'\t3g mr start');
-var mr3g = db.cep3g_insert.mapReduce(
+var mr3g = db.cep3g_join.mapReduce(
     function () {
         //var time= this.timestamp.substring(0,2);
         try {
@@ -46,7 +47,8 @@ var mr3g = db.cep3g_insert.mapReduce(
     },
     function (key, values) {
         var doc = {
-            HO_CALLED_COUNT: 0
+            HANGOVER: 0
+            ,HO_CALLED_COUNT: 0
             ,HO_CALLED_MINUTES: 0
             ,HO_CALLED_SECONDS: 0
 
@@ -99,13 +101,20 @@ var mr3g = db.cep3g_insert.mapReduce(
             //time: interval
             record_type:{$in:["1","2"]}
         },
-        out: "cdr3g_mr"
+        out: {
+            replace:"cep3g_mr" //replace/merge/reduce
+            //,inline:1 //use memory either shard
+            //,sharded:1
+            //,nonAtomic:0
+            
+        }
     }
 );
-//mongo cdr cdr_mr_3g.js > ./cdr_mr_3g_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
+//mongo cdr cep3g_mr.js > ./cep3g_mr_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 
 print(new Date().toLocaleTimeString()+'\t3g mr end');
 print(JSON.stringify(mr3g));
+//db.cep3g_mr.find().skip(5).limit(2).pretty()
 //mr3g.forEach(function(doc){
 //    print(JSON.stringify(doc));
 //});

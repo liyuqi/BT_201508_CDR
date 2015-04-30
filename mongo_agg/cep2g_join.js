@@ -1,6 +1,6 @@
-//mongo cdr cdr_join_map_2g.js > c:\workspace\CDR0324\cdr_map_2g_result.txt
-//mongo cdr cdr_join_map_2g.js > ./cdr_map_2g_result.txt
-//mongo cdr cdr_join_map_2g.js > ./cdr_map_2g_result_$(date +"%H%M%S")_$(date +"%Y%m%d").txt
+//mongo cdr cep2g_join.js > c:\workspace\CDR0324\cdr_map_2g_result.txt
+//mongo cdr cep2g_join.js > ./cep2g_join_result.txt
+//mongo cdr cep2g_join.js > ./cep2g_join_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 var /*cdr2g,*/ phone_map = {}, site2g_map = {}, site3g_map = {}, SIM_map = {}, CARRIER_map = {};
 
 function buildPhoneMap(){
@@ -110,6 +110,7 @@ print(new Date().toLocaleTimeString()+'\tprocess:'+i);
 //var interval = {$gte:t0,$lt:t1}; //ISODate("2015-03-31T16:00:00Z")
 
 var cdr2g = db.cep2g_sample.find({
+//var cdr2g = db.cep2g_gen.find({
     //time : interval
     CALLTRANSACTIONTYPE:{$in:["1","2"]}
 },{
@@ -192,11 +193,12 @@ var cdr2g = db.cep2g_sample.find({
         //doc.up_flag = 1;  //================================================= update done, erich up_flag:1
         //db.cep2g_sample.save(doc); //============= cep 2g save =============
         db.cep2g_sample.update({_id:doc._id},{$set : {up_flag:1}}); //============= cep 2g save =============
-        db.cep2g_insert.save(doc);
+        //db.cep2g_gen.update({_id:doc._id},{$set : {up_flag:1}}); //============= cep 2g save =============
+        db.cep2g_join.save(doc);
     }else{} //print("else")
 
     i++;
 });
 print(new Date().toLocaleTimeString()+'\tprocess:'+i);
 db.cep2g_sample.findOne({up_flag:1},{STARTOFCHARGINGDATE:1,TIMESTAMP:1,LASTCELLID_LAC:1,LASTCELLID:1,up_flag:1});
-//mongo cdr cdr_join_map_2g.js > ./cdr_map_2g_result_$(date +"%H%M%S")_$(date +"%Y%m%d").txt
+//mongo cdr cep3g_join.js > ./cep3g_join_result_$(date +"%Y%m%d")_$(date +"%H%M%S").txt

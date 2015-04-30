@@ -1,5 +1,34 @@
 //prepare collection
-sh ~/desktop/CEP_TWM0409/file2gformat2m/file2gformat2m_run.sh
+//sh ~/desktop/CEP_TWM0409/file2gformat2m/file2gformat2m_run.sh
+
+db.cep2g_sample =
+{
+    "CALLDURATION" : 2,
+    "CALLTRANSACTIONTYPE" : "1",
+    "CAUSEFORTERMINATION" : "0",
+    "EXCHANGEID" : "CHAMSC1",
+    "LASTCELLID" : "33738",
+    "LASTCELLID_LAC" : "30306",
+    "LASTCELLID_MCCMNC" : "466 97",
+    "MCRDESTINATIONNUMBER" : "",
+    "OTHERMSRN" : "886983744762",
+    "SERVEDIMEI" : "8784280546282978",
+    "SERVEDIMSI" : "466974807435077",
+    "SERVEDMSISDN" : "886973413001",
+    "STARTOFCHARGINGDATE" : "2015-01-05",
+    "TIMESTAMP" : "10:09:59",
+    "up_flag" : 1,
+    "SITE_ID" : "51022",
+    "SITE_NAME" : "員林中正二",
+    "BELONG_TO" : "第三維運處",
+    "CELL_NO" : "33738",
+    "LAC_OD" : "30306",
+    "BTS_ADDRESS" : "彰化縣員林鎮",
+    "SIM_TYPE" : "USIM",
+    "CARRIER" : "台灣大哥大",
+    "_id" : ObjectId("5524fc9fe4b00ac5bf08ea8a")
+};
+
 //map fields
 db.cep2g_sample.find({CALLTRANSACTIONTYPE:{$in:["1","2"]}},
     {

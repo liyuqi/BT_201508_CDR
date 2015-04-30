@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link href="/stylesheets/c3.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/d3.min.js" charset="utf-8"></script>
+    <script src="/javascripts/c3.min.js"></script>
+</head>
+<body>
+<form class="form-horizontal" method="post">
+    <fieldset>
+        <legend>查詢 CDR</legend>
+
+        <table class="table table-hover table-condensed borderless">
+            <caption></caption>
+            <thead>
+            <tr>
+            <tr>
+                <th id="name0">名稱</th>
+                <th id="field0">field</th>
+                <th id="input0">input</th>
+                <th id="sample0">sample</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td id="name16">RECORD_TYPE</td>
+                <td id="field16"><label for="RECORD_TYPE">RECORD_TYPE</label></td>
+                <td id="input16"><input type="text" class="input-medium" id="RECORD_TYPE" name="RECORD_TYPE"/></td>
+                <td id="sample16">19</td>
+            </tr>
+            <tr>
+                <td id="name17">日期</td>
+                <td id="field17"><label for="G_RECORD_OPENING_TIME">G_RECORD_OPENING_TIME</label></td>
+                <td id="input17"><input type="text"  class="input-medium" id="G_RECORD_OPENING_TIME" name="G_RECORD_OPENING_TIME" placeholder="regular"/></td>
+                <td id="sample17">2015-01-05</td><!--type="date"-->
+            </tr>
+            <!--<tr>-->
+                <!--<td id="name13">時間</td>-->
+                <!--<td id="field13"><label for="TIMESTAMP">TIMESTAMP</label></td>-->
+                <!--<td id="input13"><input type="text"  class="input-medium" id="TIMESTAMP" name="TIMESTAMP" placeholder="regular"/></td>-->
+                <!--<td id="sample13">10:30:36</td>&lt;!&ndash;type="datetime-local"&ndash;&gt;-->
+            <!--</tr>-->
+
+            <tr>
+                <td id="name4">SERVED_MSISDN</td>
+                <td id="field4"><label for="SERVED_MSISDN">SERVED_MSISDN</label></td>
+                <td id="input4"><input type="text" class="input-medium" id="SERVED_MSISDN" name="SERVED_MSISDN"/></td>
+                <td id="sample4">886987611519</td>
+            </tr>
+            <tr>
+                <td id="name3">G_DIAGNOSTICS</td>
+                <td id="field3"><label for="G_DIAGNOSTICS">G_DIAGNOSTICS</label></td>
+                <td id="input3"><input type="text" class="input-medium" id="G_DIAGNOSTICS" name="G_DIAGNOSTICS"/></td>
+                <td id="sample3">FFFF</td>
+            </tr>
+            <tr>
+                <td id="name5">LAC</td>
+                <td id="field5"><label for="CALLED_SUBS_FIRST_LAC">CALLED_SUBS_FIRST_LAC</label></td>
+                <td id="input5"><input type="text" class="input-medium" id="CALLED_SUBS_FIRST_LAC" name="CALLED_SUBS_FIRST_LAC"/></td>
+                <td id="sample5">1419919196139</td>
+            </tr>
+            <tr>
+                <td id="name10">SAC</td>
+                <td id="field10"><label for="CALLED_SUBS_FIRST_SAC">CALLED_SUBS_FIRST_SAC</label></td>
+                <td id="input10"><input type="text" class="input-medium" id="CALLED_SUBS_FIRST_SAC" name="CALLED_SUBS_FIRST_SAC"/></td>
+                <td id="sample10">35540</td>
+            </tr>
+            <tr>
+                <td id="name11">上傳</td>
+                <td id="field11"><label for="G_UPLINK">G_UPLINK</label></td>
+                <td id="input11"><input type="text" class="input-medium" id="G_UPLINK" name="G_UPLINK"/></td>
+                <td id="sample11">329532</td>
+            </tr>
+            <tr>
+                <td id="name2">下載</td>
+                <td id="field2"><label for="G_DOWNLINK">G_DOWNLINK</label></td>
+                <td id="input2"><input type="text" class="input-medium" id="G_DOWNLINK" name="G_DOWNLINK"/></td>
+                <td id="sample2">20642941</td>
+            </tr>
+
+            <!-- <tr>
+            <td id="name8">Last MCC</td> <td id="field8"><label for="calling_subs_last_mcc">calling_subs_last_mcc</label></td>
+            <td id="input8"><input type="text" class="input-large" id="calling_subs_last_mcc" name="calling_subs_last_mcc"/></td>
+            <td id="sample8">466</td>
+            </tr>-->
+            <!--<tr>-->
+            <!--<td id="name9">Last MNC</td>-->
+            <!--<td id="field9"><label for= "LASTCELLID_MCCMNC">LASTCELLID_MCCMNC</label></td>-->
+            <!--<td id="input9"><input type="text" class="input-medium" id="LASTCELLID_MCCMNC" name="LASTCELLID_MCCMNC"/></td>-->
+            <!--<td id="sample9">466 97</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td id="name7">Last LAC</td>-->
+                <!--<td id="field7"><label for="LASTCELLID_LAC">LASTCELLID_LAC</label></td>-->
+                <!--<td id="input7"><input type="text" class="input-medium" id="LASTCELLID_LAC" name="LASTCELLID_LAC"/></td>-->
+                <!--<td id="sample7">30309</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                 <!--<td id="name6">Last CellID</td>-->
+                 <!--<td id="field6"><label for="LASTCELLID">LASTCELLID</label></td>-->
+                 <!--<td id="input6"><input type="text" class="input-medium" id="LASTCELLID" name="LASTCELLID"/></td>-->
+                 <!--<td id="sample6">34762</td>-->
+             <!--</tr>-->
+
+            <!--<tr>-->
+                <!--<td id="name14">通話時間</td>-->
+                <!--<td id="field14"><label for="CALLDURATION">CALLDURATION</label></td>-->
+                <!--<td id="input14"><input type="text" class="input-medium" id="CALLDURATION" name="CALLDURATION" /></td>-->
+                <!--<td id="sample14">11</td>-->
+            <!--</tr>-->
+
+            </tbody>
+        </table>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">search</button>
+        </div>
+    </fieldset>
+</form>
+
+<p></p>
+
+<% if (resp) { %>
+<h3>搜尋結果</h3>
+<% if (resp.length == 0) { %>
+<h4> 查無資料!</h4>
+<% } else /*if (resp.length < 20)*/{%>
+<h4> 回傳 <%= resp.length %> 筆</h4>
+
+<table class="table table-hover table-condensed">
+    <caption></caption>
+    <thead>
+    <tr>
+    <tr>
+        <th>query</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% resp.forEach( function(body){ %>
+    <tr>
+        <%= JSON.stringify(body)%>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+<% } %>
+<% } else { %>
+<h3>總量 : <%= totalcount %>筆資料</h3>
+<% } %>
+
+</body>
+</html>

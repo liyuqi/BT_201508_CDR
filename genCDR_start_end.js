@@ -24,15 +24,22 @@ print(new Date().toLocaleTimeString()+'\tprocess: start');
 for (var day = start; day <end; day++) {
 //for (var day = 5; day > 0; day--) {
 //    var milli = 0;
-    var cdr2g = db.cep2g_sample.find({},{}).limit(100000);
+    var cdr2g = db.cep2g_sample.find({
+        //time : interval
+        CALLTRANSACTIONTYPE:{$in:["1","2"]} //2g
+        //record_type:{$in:["1","2"]} //3g
+        //RECORD_TYPE:"19" //gprs
+    },{}).limit(100000);
     //for (var milli = 0; milli < 1000; milli++) {
     cdr2g.forEach(function (doc) {
 
         var item = doc;
         item._id = new ObjectId();
         item.time = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/);
-        //item.STARTOFCHARGINGDATE = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/).toJSON().substr(0, 10);
-        //item.TIMESTAMP = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/).toLocaleTimeString();
+        item.STARTOFCHARGINGDATE = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/).toJSON().substr(0, 10);
+        item.TIMESTAMP = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/).toLocaleTimeString();
+ /*3g*/         //item.date_time = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/).toJSON();
+ /*gprs*/       //item.G_RECORD_OPENING_TIME = new Date((new Date).getTime() + day * 24 * 60 * 60 * 1000 /*+ milli*/).toJSON();
         //print(item.STARTOFCHARGINGDATE + '\t' + item.TIMESTAMP + '\t' + item.time.toJSON());
         db.gen_2g.insert(item);
         //milli++;

@@ -1,18 +1,18 @@
 //prepare collection
-sh ~/desktop/CEP_TWM0409/file3gformat2m/file3gformat2m_run.sh
+//sh ~/desktop/CEP_TWM0409/file3gformat2m/file3gformat2m_run.sh
 //map fields
-db.cep3g_insert.find({
+db.cep3g_sample.find({
     "record_type":{$in:["1","2"]}
 },{
     "called_subs_last_ci" : 1,      //#index site
     "calling_subs_last_ci" : 1,     //#index site
     "PT_OID" : 1,
-    "SITE_ID"  1,
+    "SITE_ID": 1,
     "_id" : 1
 });
 
 //req fields
-> db.cep3g.findOne({
+db.cep3g.findOne({
     "record_type":{$in:["1","2"]}
 },{
     "called_number" : 1,          //^[]#index
@@ -64,7 +64,7 @@ db.cep3g_sample.find({},
         "call_reference_focus" : 1,
         "call_reference_process" : 1,
         "call_reference_time" : 1,
-        "call_type" : "1,
+        "call_type" : 1,
         "call_state" :1,
         "called_category" : 1,
         "called_cell_band" :1,
@@ -124,7 +124,7 @@ db.cep3g_sample.find({},
         "camel_call_reference" : 1,
         "camel_exchange_id" : 1,
         "camel_exchange_id_ton" : 1,
-        "carrier_selection" : "1,
+        "carrier_selection" : 1,
         "cause_for_termination" : 1,
         "cf_information" :1,
         "channel_rate_indicator_01" : 1,
@@ -224,12 +224,12 @@ db.cep3g_sample.find({},
         "orig_mcz_tariff_class" : 1,
         "out_bnc_connection_type" : 1,
         "out_channel_allocated_time" :1,
-        "out_circuit" : "41,
-        "out_circuit_group" : "251,
+        "out_circuit" : 41,
+        "out_circuit_group" : 251,
         "outside_control_plane_index" : 1,
         "outside_user_plane_index" : 1,
-        "pic" : "FF1,
-        "pni" : "FFFF1,
+        "pic" : "FF1",
+        "pni" : "FFFF1",
         "radio_network_type" : 1,
         "rate_adaption" : 1,
         "record_length" : 1,
