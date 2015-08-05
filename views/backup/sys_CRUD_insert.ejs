@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <style>
+        .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<form class="form-horizontal" method="post">
+    <fieldset>
+        <legend>新增 log</legend>
+        <div class="control-group">
+            <!--<label class="control-label" for="leveltype">level</label>-->
+
+            <!--<div class="controls">-->
+            <!--<select name="leveltype" class="input-xlarge" data-size="5">-->
+            <!--<option value="ANALYSIS">ANALYSIS</option>-->
+            <!--<option value="info">info</option>-->
+            <!--<option value="warn">warn</option>-->
+            <!--<option value="error">error</option>-->
+            <!--<option value="fatal">fatal</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--<p></p>-->
+            <!--<label class="control-label" for="timestamp">timestamp</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" class="input-xlarge" id="timestamp" name="timestamp"/>　　ex:2014-04-25-->
+            <!--</div>-->
+            <!--<p></p>-->
+            <table class="table table-hover table-condensed borderless">
+                <caption></caption>
+                <thead>
+                <tr>
+                <tr>
+                    <th id="name0">名稱</td>
+                    <th id="field0">field</th>
+                    <th id="input0">input</th>
+                    <th id="sample0">sample</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td id="name1">時間</td> <td id="field1"><label for="timestamp">timestamp</label></td>
+                    <td id="input1"><input type="text" class="input-large" id="timestamp" name="timestamp" disabled="disabled"/></td>
+                    <td id="sample1">2015-03-01T01:56</td>
+                </tr>
+                <tr>
+                    <td id="name2">發送來源</td> <td id="field2"><label for="device_name">device_name</label></td>
+                    <td id="input2"><input type="text" class="input-large" id="device_name" name="device_name" value="test-pc"/></td>
+                    <td id="sample2">test-pc</td>
+                </tr>
+                <tr>
+                    <td id="name3">訊息ID</td>   <td id="field3"><label for="identifier">identifier</label></td>
+                    <td id="input3"><input type="text" class="input-large" id="identifier" name="identifier" disabled="disabled" /></td>
+                    <td id="sample3">PIX-6-302005</td>
+                </tr>
+                <tr>
+                    <td id="name4">分類</td>  <td id="field4"><label for="facility">Facility</label></td>
+                    <td id="input4"><input type="text" class="input-large" id="facility" name="facility" value="PIX" /></td>
+                    <td id="sample4">PIX</td>
+                </tr>
+                <tr>
+                    <td id="name5">嚴重</td>   <td id="field5"><label for="severity">Severity</label></td>
+                    <td id="input5"><input type="text" class="input-large" id="severity" name="severity" value="4" /></td>
+                    <td id="sample5">4</td>
+                </tr>
+                <tr>
+                    <td id="name6">識別</td>   <td id="field6"><label for="mnemonic">Mnemonic</label></td>
+                    <td id="input6"><input type="text" class="input-large" id="mnemonic" name="mnemonic" value="insert" /></td>
+                    <td id="sample6">302005</td>
+                </tr>
+                <tr>
+                    <td id="name7">訊息</td>  <td id="field7"><label for="message">message</label></td>
+                    <td id="input7"><input type="text" class="input-large" id="message" name="message" value="Could not process"/></td>
+                    <td id="sample7">Could not process</td>
+                </tr>
+                <tr>
+                    <td id="name8">擴充</td> <td id="field8"><label for="enrich">Enrich</label></td>
+                    <td id="input8"><input type="text" class="input-large" id="enrich" name="enrich" value="Could not process"/></td>
+                    <td id="sample8">Could not process</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">送出</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<!--這一段是存在的-->
+<% if (locals.messages) { %>
+<% messages.forEach(function(message) { %>
+<p class='<%= message.type %>'><%= message.string %></p>
+<% }) %>
+<% removeMessages() %>
+<% } %>
+
+<br>
+
+<p></p>
+<% if (resp) { %>
+<h3>儲存完成</h3>
+
+<!--<p>Level : <%= resp.level %></p>-->
+<p>_id : <%= resp._id %></p>
+<p>Time : <%= resp.time %></p>
+<p>Device_name : <%= resp.device_name %></p>
+<p>Identifier : <%= resp.identifier %></p>
+<p>Facility : <%= resp.facility %></p>
+<p>Severity : <%= resp.severity %></p>
+<p>Mnemonic : <%= resp.mnemonic %></p>
+<p>Log Message : <%= resp.message %></p>
+<p>Log Erich : <%= resp.enrich %></p>
+
+<% } else { %>
+<h3></h3>
+<% } %>
+
+</body>
+</html>

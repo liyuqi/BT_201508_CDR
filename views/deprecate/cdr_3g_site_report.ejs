@@ -14,7 +14,7 @@
 <% if (resp.length == 0) { %>
 <h4>查無資料!</h4>
 <% } else{ %>
-<h3> 總量 : <%= db_count %>筆資料, 符合<%= totalcount %> 筆, 顯示前 <%= resp.length %> 筆</h3>
+<h3> 總量 : <%# db_count %>筆資料, 符合<%# totalcount %> 筆, 顯示前 <%= resp.length %> 筆</h3>
 
 
 
@@ -23,7 +23,7 @@
         <thead>
         <tr>
             <td id="#"></td>
-            <th id="G_RECORD_OPENING_TIME"  >日期時間</th>
+            <th id="TIME"  >日期時間</th>
             <!--<th id="th_charging_start_time"     >時間</th>-->
             <!--<th id="th_charging_end_time"       >通話結束時間</th>-->
             <script>//依基站</script>
@@ -42,19 +42,21 @@
         <tr>
             <!--<td><%# body.date_time %></td>-->
             <!--<td><%# body._id %></td>-->
+            <% var key; %>
             <td id="#"><%= i++ %></td>
             <td id="id"  text="日期時間" ><%= JSON.stringify(body._id) %></td>
-            <!--<td id="G_RECORD_OPENING_TIME"  text="日期時間" ><%= body.G_RECORD_OPENING_TIME %></td>-->
-            <!--<td id="charging_start_time" text="開始"   ><%= body.TIMESTAMP %></td>-->
-            <!--<td id="charging_end_time"  text="通話結束" ><%= body.charging_end_time %></td>-->
+
+            <!--<td id="charging_start_time" text="開始"   ><%# body._id.TIMESTAMP %></td>-->
+            <!--<td id="charging_end_time"  text="通話結束" ><%# body._id.charging_end_time %></td>-->
             <script>//依基站</script>
-            <!--<td id="RECORD_TYPE"            text="TYPE"     ><%= body.RECORD_TYPE %></td>-->
-            <!--<td id="SERVED_MSISDN"          text="MSISDN"   ><%= body.SERVED_MSISDN %></td>-->
-            <!--<td id="G_DIAGNOSTICS"          text="DIAGNOS"  ><%= body.G_DIAGNOSTICS %></td>-->
-            <!--<td id="CALLED_SUBS_FIRST_LAC"  text="LAC"      ><%= body.CALLED_SUBS_FIRST_LAC %></td>-->
-            <!--<td id="CALLED_SUBS_FIRST_SAC"  text="SAC"      ><%= body.CALLED_SUBS_FIRST_SAC %></td>-->
-            <!--<td id="G_UPLINK"               text="IMEI"     ><%= body.G_UPLINK %></td>-->
-            <!--<td id="G_DOWNLINK"             text="IMSI"     ><%= body.G_DOWNLINK %></td>-->
+            <!--<td id="G_RECORD_OPENING_TIME"  text="日期時間" ><%# body._id.G_RECORD_OPENING_TIME %></td>-->
+            <!--<td id="RECORD_TYPE"            text="TYPE"     ><%# body._id.RECORD_TYPE %></td>-->
+            <!--<td id="SERVED_MSISDN"          text="MSISDN"   ><%# body._id.SERVED_MSISDN %></td>-->
+            <!--<td id="G_DIAGNOSTICS"          text="DIAGNOS"  ><%# body._id.G_DIAGNOSTICS %></td>-->
+            <!--<td id="CALLED_SUBS_FIRST_LAC"  text="LAC"      ><%# body._id.CALLED_SUBS_FIRST_LAC %></td>-->
+            <!--<td id="CALLED_SUBS_FIRST_SAC"  text="SAC"      ><%# body._id.CALLED_SUBS_FIRST_SAC %></td>-->
+            <!--<td id="G_UPLINK"               text="IMEI"     ><%# body._id.G_UPLINK %></td>-->
+            <!--<td id="G_DOWNLINK"             text="IMSI"     ><%# body._id.G_DOWNLINK %></td>-->
         </tr>
         <% }); %>
         </tbody>

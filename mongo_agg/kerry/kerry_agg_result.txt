@@ -1,0 +1,40 @@
+MongoDB shell version: 3.0.1
+connecting to: 127.0.0.1:40000/cdr
+assert: command failed: {
+	"errmsg" : "exception: getMore: cursor didn't exist on server, possible restart or timeout?",
+	"code" : 13127,
+	"ok" : 0,
+	"$gleStats" : {
+		"lastOpTime" : Timestamp(1431003285, 2),
+		"electionId" : ObjectId("5541a942f71e8c9ee99f5a86")
+	}
+} : aggregate failed
+Error: command failed: {
+	"errmsg" : "exception: getMore: cursor didn't exist on server, possible restart or timeout?",
+	"code" : 13127,
+	"ok" : 0,
+	"$gleStats" : {
+		"lastOpTime" : Timestamp(1431003285, 2),
+		"electionId" : ObjectId("5541a942f71e8c9ee99f5a86")
+	}
+} : aggregate failed
+    at Error (<anonymous>)
+    at doassert (src/mongo/shell/assert.js:11:14)
+    at Function.assert.commandWorked (src/mongo/shell/assert.js:254:5)
+    at DBCollection.aggregate (src/mongo/shell/collection.js:1278:12)
+    at kerry_agg.js:2:14
+2015-05-07T20:54:06.833+0800 E QUERY    Error: command failed: {
+	"errmsg" : "exception: getMore: cursor didn't exist on server, possible restart or timeout?",
+	"code" : 13127,
+	"ok" : 0,
+	"$gleStats" : {
+		"lastOpTime" : Timestamp(1431003285, 2),
+		"electionId" : ObjectId("5541a942f71e8c9ee99f5a86")
+	}
+} : aggregate failed
+    at Error (<anonymous>)
+    at doassert (src/mongo/shell/assert.js:11:14)
+    at Function.assert.commandWorked (src/mongo/shell/assert.js:254:5)
+    at DBCollection.aggregate (src/mongo/shell/collection.js:1278:12)
+    at kerry_agg.js:2:14 at src/mongo/shell/assert.js:13
+failed to load: kerry_agg.js

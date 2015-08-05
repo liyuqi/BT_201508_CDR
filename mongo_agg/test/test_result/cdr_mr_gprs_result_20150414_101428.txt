@@ -1,0 +1,53 @@
+MongoDB shell version: 3.0.1
+connecting to: cdr
+10:14:28	gprs mr start
+10:16:40	gprs mr end
+{
+	"result" : "cdrgprs_mr",
+	"timeMillis" : 131495,
+	"counts" : {
+		"input" : 3509017,
+		"emit" : 3509017,
+		"reduce" : 337377,
+		"output" : 32762
+	},
+	"ok" : 1,
+	"_o" : {
+		"result" : "cdrgprs_mr",
+		"timeMillis" : 131495,
+		"counts" : {
+			"input" : 3509017,
+			"emit" : 3509017,
+			"reduce" : 337377,
+			"output" : 32762
+		},
+		"ok" : 1
+	},
+	"_keys" : ["result", "timeMillis", "counts", "ok"],
+	"_db" : {
+		"_mongo" : {
+			"slaveOk" : false,
+			"host" : "127.0.0.1"
+		},
+		"_name" : "cdr",
+		"_defaultAuthenticationMechanism" : null,
+		"_defaultGssapiServiceName" : "mongodb"
+	},
+	"_coll" : {
+		"_mongo" : {
+			"slaveOk" : false,
+			"host" : "127.0.0.1"
+		},
+		"_db" : {
+			"_mongo" : {
+				"slaveOk" : false,
+				"host" : "127.0.0.1"
+			},
+			"_name" : "cdr",
+			"_defaultAuthenticationMechanism" : null,
+			"_defaultGssapiServiceName" : "mongodb"
+		},
+		"_shortName" : "cdrgprs_mr",
+		"_fullName" : "cdr.cdrgprs_mr"
+	}
+}

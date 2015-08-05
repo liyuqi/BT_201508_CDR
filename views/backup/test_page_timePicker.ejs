@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link href="/stylesheets/c3.css" rel="stylesheet" type="text/css">
+
+    <script src="/javascripts/d3.min.js" charset="utf-8"></script>
+    <script src="/javascripts/c3.min.js"></script>
+
+    <link rel="stylesheet" href="https://github.com/dbushell/Pikaday/blob/master/css/pikaday.css">
+    <script src="https://github.com/dbushell/Pikaday/blob/master/pikaday.js"></script>
+    <script src="https://github.com/dbushell/Pikaday/blob/master/pikaday.js"></script>
+    <style>
+        .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<form class="form-horizontal" method="post">
+    <fieldset>
+        <legend>查詢 log</legend>
+
+        <table class="table table-hover table-condensed borderless">
+            <caption></caption>
+            <thead>
+            <tr>
+            <tr>
+                <th id="name0">名稱</td>
+                <th id="field0">field</th>
+                <th id="input0">input</th>
+                <th id="sample0">sample</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <script type="text/javascript">
+                //document.getElementById('inputdate1' ).value = new Date().toISOString();
+                //document.getElementById('inputtime1' ).value = new Date().toISOString();
+                //document.getElementById('input_dt_1' ).value = new Date().toISOString();
+                //document.getElementById('inputlocal1').value = new Date().toISOString();
+
+//                document.getElementById('inputdate1' ).value = new Date().getDate();
+//                document.getElementById('inputtime1' ).value = new Date().getTime();
+//                document.getElementById('input_dt_1' ).value = new Date().UTC();
+//                document.getElementById('inputlocal1').value = new Date().toISOString();
+//                document.getElementById('inputdate1' ).createAttribute("value");
+//                document.getElementById('inputdate1').setAttribute("value", new Date().getDate());
+//                document.getElementById('inputtime1' ).createAttribute("value");
+//                document.getElementById('inputtime1').setAttribute("value", new Date().getTime());
+//                document.getElementById('input_dt_1' ).createAttribute("value");
+//                document.getElementById('input_dt_1').setAttribute("value", new Date().UTC());
+//                document.getElementById('inputlocal1').createAttribute("value");
+//                document.getElementById('inputlocal1').setAttribute("value", new Date().toISOString());
+                //value="<%# new Date().getTime()%>"
+            </script>
+            <tr>
+                <td id="name1">時間date</td>
+                <td id="field1"><label for="date">date</label></td>
+                <td id="input1">
+                    <input type="date" class="input-medium" id="inputdate1" name="inputdate1"/>
+                    <input type="date" class="input-medium" id="inputdate2" name="inputdate2"/>
+                </td>
+                <td id="sample1">2015-03-01T01:56</td>
+            </tr>
+            <tr>
+                <td id="name2">時間time</td>
+                <td id="field2"><label for="time">time</label></td>
+                <td id="input2">
+                    <input type="time" class="input-medium" id="inputtime1" name="inputtime1"/>
+                    <input type="time" class="input-medium" id="inputtime2" name="inputtime2"/>
+                </td>
+                <td id="sample2">2015-03-01T01:56</td>
+            </tr>
+            <tr>
+                <td id="name3">時間date_time</td>
+                <td id="field3"><label for="datetime">datetime</label></td>
+                <td id="input3">
+                    <input type="datetime" class="input-medium" id="input_dt_1"  name="inputdate_time1""/>
+                    <input type="datetime" class="input-medium" id="input_dt_2"  name="inputdate_time2"/>
+                </td>
+                <td id="sample3">2015-03-01T01:56</td>
+            </tr>
+            <tr>
+                <td id="name4">時間local</td>
+                <td id="field4"><label for="local">local</label></td>
+                <td id="input4">
+                    <input type="datetime-local" class="input-large" id="inputlocal1" name="inputlocal1"/>
+                    <input type="datetime-local" class="input-large" id="inputlocal2" name="inputlocal2"/>
+                </td>
+                <td id="sample4">2015-03-01T01:56</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">search</button>
+        </div>
+    </fieldset>
+</form>
+
+</body>
+</html>

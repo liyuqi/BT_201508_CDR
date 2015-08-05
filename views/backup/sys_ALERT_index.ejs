@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+<form class="form-horizontal" method="post">
+    <fieldset>
+        <legend>新增 log</legend>
+
+        <div class="control-group">
+            <label class="control-label" for="logid">_id</label>
+
+            <div class="controls">
+                <select id="field" multiple="multiple">
+                    <option>time</option>
+                    <option>identifier</option>
+                    <option>message</option>
+                </select>
+
+                <p></p>
+
+                <label class="control-label" for="key_value">Message</label>
+
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="key_value" name="key_value"/>
+                </div>
+                <p></p>
+
+                <div>time 建議值:2014-03-24</div>
+                <div>identifier 建議值:PIX-4-106023</div>
+                <div>message 建議值:198.207.223.240</div>
+                <p></p>
+
+                <div> * 一次僅會輸入一個條件</div>
+                <!--，由上面的欄位開始。-->
+                <p></p>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">送出</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<!--這一段是存在的-->
+<% if (locals.messages) { %>
+<% messages.forEach(function(message) { %>
+<p class='<%= message.type %>'><%= message.string %></p>
+<% }) %>
+<% removeMessages() %>
+<% } %>
+
+<br>
+
+<p></p>
+<% if (resp) { %>
+<h3>儲存完成</h3>
+
+<!--<p>Level : <%= resp.level %></p>-->
+<p>_id : <%= resp._id %></p>
+<p>Timestamp : <%= resp.timestamp %></p>
+<p>Identifier : <%= resp.identifier %></p>
+<p>Log Message : <%= resp.message %></p>
+
+<% } else { %>
+<h3></h3>
+<% } %>
+
+</body>
+</html>

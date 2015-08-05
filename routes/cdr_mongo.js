@@ -44,80 +44,53 @@ exports.cdr_CRUD_query = function(mongodb){
 
         //field input
         var query = {};
-        //if(req.body.date_time){
-        //    query.date_time = req.body.date_time.trim();
+
+        for (var key in req.body){
+            if(req.body[key].length==0);
+            else
+                query[key] = req.body[key].trim();
+        }
+
+
+        //if(req.body.called_number){
+        //    query.called_number = req.body.called_number.trim();
         //}
-        //if(req.body.charging_start_time){
-        //    if(req.body.charging_end_time){
-        //        query.time = {$gte: Number(req.body.charging_start_time), $lt: Number(req.body.charging_end_time)};
-        //    }else{
-        //        query.time = {$gte: Number(req.body.charging_start_time)};
-        //    }
+        //if(req.body.calling_imei){
+        //    query.calling_imei = req.body.calling_imei.trim();
         //}
-        //if(req.body.charging_end_time){
-        //    if(req.body.charging_start_time){
-        //        query.time = {$gte: Number(req.body.charging_start_time.trim()), $lt: Number(req.body.charging_end_time.trim())};
-        //    }else{
-        //        query.time = {$lt : Number(req.body.charging_end_time.trim())}
-        //    }
+        //if(req.body.called_imei){
+        //    query.called_imei = req.body.called_imei.trim();
         //}
-        if(req.body.called_number){
-            query.called_number = req.body.called_number.trim();
-        }
-        if(req.body.calling_imei){
-            query.calling_imei = req.body.calling_imei.trim();
-        }
-        if(req.body.called_imei){
-            query.called_imei = req.body.called_imei.trim();
-        }
-        if(req.body.calling_imsi){
-            query.calling_imsi = req.body.calling_imsi.trim();
-        }
-        if(req.body.called_imsi){
-            query.called_imsi = req.body.called_imsi.trim();
-        }
-        if(req.body.calling_number){
-            query.calling_number = req.body.calling_number.trim();
-        }
-        //if(req.body.calling_subs_last_ci){
-        //    query.calling_subs_last_ci = req.body.calling_subs_last_ci.trim();
+        //if(req.body.calling_imsi){
+        //    query.calling_imsi = req.body.calling_imsi.trim();
         //}
-        //if(req.body.calling_subs_last_lac){
-        //    query.calling_subs_last_lac = req.body.calling_subs_last_lac.trim();
+        //if(req.body.called_imsi){
+        //    query.called_imsi = req.body.called_imsi.trim();
         //}
-        //if(req.body.calling_subs_last_mcc){
-        //    query.calling_subs_last_mcc = req.body.calling_subs_last_mcc.trim();
+        //if(req.body.calling_number){
+        //    query.calling_number = req.body.calling_number.trim();
         //}
-        //if(req.body.calling_subs_last_mnc){
-        //    query.calling_subs_last_mnc = req.body.calling_subs_last_mnc.trim();
+        //
+        //if(req.body.exchange_id){
+        //    query.exchange_id = req.body.exchange_id.trim();
         //}
-        if(req.body.exchange_id){
-            query.exchange_id = req.body.exchange_id.trim();
-        }
-        if(req.body.cause_for_termination){
-            query.cause_for_termination = req.body.cause_for_termination.trim();
-        }
-        //if(req.body.charging_end_time){
-        //    query.charging_end_time = req.body.charging_end_time.trim();
+        //if(req.body.cause_for_termination){
+        //    query.cause_for_termination = req.body.cause_for_termination.trim();
         //}
-        //if(req.body.charging_start_time){
-        //    query.charging_start_time = req.body.charging_start_time.trim();
+        //
+        //if(req.body.orig_mcz_duration){
+        //    query.orig_mcz_duration = req.body.orig_mcz_duration.trim();
         //}
-        if(req.body.orig_mcz_duration){
-            query.orig_mcz_duration = req.body.orig_mcz_duration.trim();
-        }
-        if(req.body.term_mcz_duration){
-            query.term_mcz_duration = req.body.term_mcz_duration.trim();
-        }
-        if(req.body.radio_network_type){
-            query.radio_network_type = req.body.radio_network_type.trim();
-        }
-        if(req.body.record_type){
-            query.record_type = req.body.record_type.trim();
-        }
-        //if (req.body.logid) {
-        //    query._id = req.body.logid;
+        //if(req.body.term_mcz_duration){
+        //    query.term_mcz_duration = req.body.term_mcz_duration.trim();
         //}
+        //if(req.body.radio_network_type){
+        //    query.radio_network_type = req.body.radio_network_type.trim();
+        //}
+        //if(req.body.record_type){
+        //    query.record_type = req.body.record_type.trim();
+        //}
+
         console.log(util.inspect(query));
 
         var keys = [];
@@ -216,7 +189,7 @@ exports.cdr_CRUD_show_pagging = function (mongodb) {
 
 exports.cdr_3g_site_report = function(mongodb){
     return function(req, res) {
-        var collection = mongodb.get('cep3g_agg');
+        var collection = mongodb.get('cep3g_agg_site');
         collection.col.count({},function(err, count) {
             if(err) res.redirect('cdr_3g_site_query');
             //console.log(format("count = %s", count));
@@ -230,35 +203,42 @@ exports.cdr_3g_site_query = function(mongodb){
     return function(req, res) {
 
         //field input
-        var query = {_id:null};
+        var query={};
 
-        if(req.body.DATE){
-            query._id.DATE = req.body.DATE.trim();
+        for (var key in req.body){
+            if(req.body[key].length==0);
+            else
+                query['_id.'+key] = req.body[key].trim();
         }
-        if(req.body.HOUR){
-            query._id.HOUR = req.body.HOUR.trim();
-        }
-        if(req.body.COUNTY){
-            query._id.COUNTY = req.body.COUNTY.trim();
-        }
-        if(req.body.DISTRICT){
-            query._id.DISTRICT = req.body.DISTRICT.trim();
-        }
-        if(req.body.SITE_NAME){
-            query._id.SITE_NAME = req.body.SITE_NAME.trim();
-        }
-        if(req.body.SITE_ID){
-            query._id.SITE_ID = req.body.SITE_ID.trim();
-        }
-        if(req.body.END_CODE){
-            query._id.END_CODE = req.body.END_CODE.trim();
-        }
-        if(req.body.SIM_TYPE){
-            query._id.SIM_TYPE = req.body.SIM_TYPE.trim();
-        }
-        if(req.body.CARRIER){
-            query._id.CARRIER = req.body.CARRIER.trim();
-        }
+
+
+        //if(req.body.DATE){
+        //    query.DATE = req.body.DATE.trim();
+        //}
+        //if(req.body.HOUR){
+        //    query.HOUR = req.body.HOUR.trim();
+        //}
+        //if(req.body.COUNTRY){
+        //    query.COUNTRY = req.body.COUNTRY.trim();
+        //}
+        //if(req.body.DISTRICT){
+        //    query.DISTRICT = req.body.DISTRICT.trim();
+        //}
+        //if(req.body.SITE_NAME){
+        //    query.SITE_NAME = req.body.SITE_NAME.trim();
+        //}
+        //if(req.body.SITE_ID){
+        //    query.SITE_ID = req.body.SITE_ID.trim();
+        //}
+        //if(req.body.END_CODE){
+        //    query.END_CODE = req.body.END_CODE.trim();
+        //}
+        //if(req.body.SIM_TYPE){
+        //    query.SIM_TYPE = req.body.SIM_TYPE.trim();
+        //}
+        //if(req.body.CARRIER){
+        //    query.CARRIER = req.body.CARRIER.trim();
+        //}
 
         console.log(util.inspect(query));
 

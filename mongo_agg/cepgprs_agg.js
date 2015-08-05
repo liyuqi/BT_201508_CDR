@@ -1,6 +1,7 @@
 //=============================== cep 2g A G G =================================
 //mongo cdr cepgprs_agg.js > ./cepgprs_agg_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
 //mongo 192.168.0.196/cdr cepgprs_agg.js > ./cepgprs_agg_$(date +"%Y%m%d")_$(date +"%H%M%S").txt
+//mongo  192.168.0.196/cdr cepgprs_agg.js --eval "var col = 'cepgprs_join'"
 
 //db.cepgprs.find({
 //    /*time: interval,up_falg:1,*/
@@ -17,7 +18,7 @@
 //    , "_id":0
 //});
 print(new Date().toLocaleTimeString());
-var flow = db.cepgprs_join.aggregate([
+var flow = db.getCollection(col.toString()).aggregate([
         {$match: {
             /*time: interval,up_falg:1,*/
             "RECORD_TYPE":"19"
@@ -58,18 +59,25 @@ var flow = db.cepgprs_join.aggregate([
             , DATA_LOAD: {$sum: "$DATA_LOAD"}
         }}
         ,{$project: {
-        _id: 1
+            _id: 0
+            , DATE : "$_id.DATE"
+            , HOUR : "$_id.HOUR"
+            //site
+            , COUNTY: "$_id.COUNTY" //縣市
+            , DISTRICT: "$_id.DISTRICT" //地區
+            , SITE_NAME: "$_id.SITE_NAME"
+            , SITE_ID: "$_id.SITE_ID"
+            //, END_CODE: "$_id.END_CODE"
 
-            , value: {
-                DATA_UPLOAD: "$DATA_UPLOAD"
-                , DATA_DOWNLOAD: "$DATA_DOWNLOAD"
-                , DATA_LOAD: "$DATA_LOAD" //{$divide: ["$DATA_LOAD", 60]}
-            }
+            , DATA_UPLOAD: "$DATA_UPLOAD"
+            , DATA_DOWNLOAD: "$DATA_DOWNLOAD"
+            , DATA_LOAD: "$DATA_LOAD" //{$divide: ["$DATA_LOAD", 60]}
+
         }}
         ,{    $out:"cepgprs_agg"}
     ]
     //,{    explain: true}
-    //,{    allowDiskUse: true}
+    ,{    allowDiskUse: true}
     //,{    cursor: { batchSize: 0 }
 );
 

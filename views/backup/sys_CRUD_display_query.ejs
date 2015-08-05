@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+
+<fieldset>
+    <legend>查詢 log</legend>
+</fieldset>
+
+<% if (resp) { %>
+<!--<h3>顯示結果</h3><br/>-->
+<% if (resp.length == 0) { %>
+<h4>查無資料!</h4>
+<% } else{ %>
+
+<h4> 總量<%= db_count %>筆， 符合<%= totalcount %>筆， 顯示<%= resp.length %> 筆</h4>
+
+<table class="table table-hover table-condensed">
+    <caption></caption>
+    <thead>
+    <tr>
+    <tr>
+        <td> </td>
+        <td>時間</td>
+        <th>來源</th>
+        <th>訊息ID</th>
+        <th>分類</th>
+        <th>嚴重</th>
+        <th>識別</th>
+        <th>訊息</th>
+        <th>擴充</th>
+        <th></th>
+        <!--<th>_id</th>-->
+    </tr>
+    </thead>
+    <thead>
+    <tr>
+    <tr>
+        <td></td>
+        <th>Timestamp</th>
+        <th>device_name</th>
+        <th>Identifier</th>
+        <th>Facility</th>
+        <th>Severity</th>
+        <th>Mnemonic</th>
+        <th>Message</th>
+        <th>Enrich</th>
+        <th></th>
+        <!--<th>_id</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <% var i=1; %>
+    <% resp.forEach( function(body){ %>
+    <tr>
+        <td><%= i++ %></td>
+        <% if(body.time) {
+        if(body.time.toString()){ %>
+        <td><%= body.time.toISOString() %></td>
+        <% } else { %>
+        <td><%= body.time.toISOString() %></td>
+        <% } } %>
+        <td><%= body.device_name %></td>
+        <td><%= body.identifier %></td>
+        <td><%= body.facility %></td>
+        <td><%= body.severity %></td>
+        <td><%= body.mnemonic %></td>
+        <td><%= body.message %></td>
+        <td><%= body.enrich %></td>
+        <!--<td><%= body._id %></td>-->
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+<% } %>
+<% } else { %>
+
+<% } %>
+</body>
+</html>

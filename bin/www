@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var debug = require('debug')('CDR0304');
+var debug = require('debug')('CDR08');
 var app = require('../app');
 
 app.set('port', process.env.PORT || 8080);

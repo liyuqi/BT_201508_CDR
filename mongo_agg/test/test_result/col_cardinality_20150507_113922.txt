@@ -1,0 +1,485 @@
+MongoDB shell version: 3.0.1
+connecting to: 127.0.0.1:40000/cdr
+get col_fields:
+11:39:22~11:39:22	0.002	 sec.
+0.cep3g_sample_distinct_field :_id
+11:39:22~11:39:22	0.651	 sec.
+1.cep3g_sample_distinct_field :acceptable_channel_codings_01
+11:39:22~11:39:23	0.398	 sec.
+2.cep3g_sample_distinct_field :acceptable_channel_codings_02
+11:39:23~11:39:23	0.396	 sec.
+3.cep3g_sample_distinct_field :acceptable_channel_codings_03
+11:39:23~11:39:24	0.403	 sec.
+4.cep3g_sample_distinct_field :acceptable_channel_codings_04
+11:39:24~11:39:24	0.406	 sec.
+5.cep3g_sample_distinct_field :acceptable_channel_codings_05
+11:39:24~11:39:24	0.411	 sec.
+6.cep3g_sample_distinct_field :acceptable_channel_codings_06
+11:39:24~11:39:25	0.412	 sec.
+7.cep3g_sample_distinct_field :acceptable_channel_codings_07
+11:39:25~11:39:25	0.428	 sec.
+8.cep3g_sample_distinct_field :acceptable_channel_codings_08
+11:39:25~11:39:26	0.418	 sec.
+9.cep3g_sample_distinct_field :add_routing_category
+11:39:26~11:39:26	0.433	 sec.
+10.cep3g_sample_distinct_field :answer_time
+11:39:26~11:39:26	0.455	 sec.
+11.cep3g_sample_distinct_field :aoc_indicator
+11:39:26~11:39:27	0.429	 sec.
+12.cep3g_sample_distinct_field :b_idle_time
+11:39:27~11:39:27	0.455	 sec.
+13.cep3g_sample_distinct_field :basic_service_code
+11:39:27~11:39:28	0.421	 sec.
+14.cep3g_sample_distinct_field :basic_service_type
+11:39:28~11:39:28	0.424	 sec.
+15.cep3g_sample_distinct_field :call_reference
+11:39:28~11:39:29	0.438	 sec.
+16.cep3g_sample_distinct_field :call_reference_comp
+11:39:29~11:39:29	0.51	 sec.
+17.cep3g_sample_distinct_field :call_reference_focus
+11:39:29~11:39:30	0.492	 sec.
+18.cep3g_sample_distinct_field :call_reference_process
+11:39:30~11:39:30	0.483	 sec.
+19.cep3g_sample_distinct_field :call_reference_time
+11:39:30~11:39:31	0.499	 sec.
+20.cep3g_sample_distinct_field :call_type
+11:39:31~11:39:31	0.478	 sec.
+21.cep3g_sample_distinct_field :call_state
+11:39:31~11:39:32	0.486	 sec.
+22.cep3g_sample_distinct_field :called_category
+11:39:32~11:39:32	0.47	 sec.
+23.cep3g_sample_distinct_field :called_cell_band
+11:39:32~11:39:33	0.5	 sec.
+24.cep3g_sample_distinct_field :called_charging_area
+11:39:33~11:39:33	0.521	 sec.
+25.cep3g_sample_distinct_field :called_imei
+11:39:33~11:39:34	0.738	 sec.
+26.cep3g_sample_distinct_field :called_imsi
+11:39:34~11:39:35	0.773	 sec.
+27.cep3g_sample_distinct_field :called_modify_parameters_01
+11:39:35~11:39:35	0.475	 sec.
+28.cep3g_sample_distinct_field :called_modify_parameters_02
+11:39:35~11:39:36	0.485	 sec.
+29.cep3g_sample_distinct_field :called_modify_parameters_03
+11:39:36~11:39:36	0.531	 sec.
+30.cep3g_sample_distinct_field :called_modify_parameters_04
+11:39:36~11:39:37	0.484	 sec.
+31.cep3g_sample_distinct_field :called_modify_parameters_05
+11:39:37~11:39:37	0.526	 sec.
+32.cep3g_sample_distinct_field :called_modify_parameters_06
+11:39:37~11:39:38	0.476	 sec.
+33.cep3g_sample_distinct_field :called_modify_parameters_07
+11:39:38~11:39:38	0.517	 sec.
+34.cep3g_sample_distinct_field :called_ms_classmark
+11:39:38~11:39:39	0.543	 sec.
+35.cep3g_sample_distinct_field :called_msrn
+11:39:39~11:39:39	0.604	 sec.
+36.cep3g_sample_distinct_field :called_msrn_npi
+11:39:39~11:39:40	0.518	 sec.
+37.cep3g_sample_distinct_field :called_msrn_ton
+11:39:40~11:39:40	0.512	 sec.
+38.cep3g_sample_distinct_field :called_number
+11:39:40~11:39:41	0.708	 sec.
+39.cep3g_sample_distinct_field :called_number_npi
+11:39:41~11:39:42	0.517	 sec.
+40.cep3g_sample_distinct_field :called_number_ton
+11:39:42~11:39:42	0.527	 sec.
+41.cep3g_sample_distinct_field :called_subs_first_ci
+11:39:42~11:39:43	0.566	 sec.
+42.cep3g_sample_distinct_field :called_subs_first_lac
+11:39:43~11:39:43	0.535	 sec.
+43.cep3g_sample_distinct_field :called_subs_first_mcc
+11:39:43~11:39:44	0.5	 sec.
+44.cep3g_sample_distinct_field :called_subs_first_mnc
+11:39:44~11:39:44	0.509	 sec.
+45.cep3g_sample_distinct_field :called_subs_last_ci
+11:39:44~11:39:45	0.613	 sec.
+46.cep3g_sample_distinct_field :called_subs_last_ex_id
+11:39:45~11:39:45	0.546	 sec.
+47.cep3g_sample_distinct_field :called_subs_last_ex_id_ton
+11:39:45~11:39:46	0.518	 sec.
+48.cep3g_sample_distinct_field :called_subs_last_lac
+11:39:46~11:39:46	0.476	 sec.
+49.cep3g_sample_distinct_field :called_subs_last_mcc
+11:39:46~11:39:47	0.552	 sec.
+50.cep3g_sample_distinct_field :called_subs_last_mnc
+11:39:47~11:39:47	0.546	 sec.
+51.cep3g_sample_distinct_field :calling_category
+11:39:47~11:39:48	0.465	 sec.
+52.cep3g_sample_distinct_field :calling_cell_band
+11:39:48~11:39:48	0.422	 sec.
+53.cep3g_sample_distinct_field :calling_charging_area
+11:39:48~11:39:49	0.461	 sec.
+54.cep3g_sample_distinct_field :calling_imei
+11:39:49~11:39:49	0.627	 sec.
+55.cep3g_sample_distinct_field :calling_imsi
+11:39:49~11:39:50	0.714	 sec.
+56.cep3g_sample_distinct_field :calling_modify_parameters_01
+11:39:50~11:39:51	0.476	 sec.
+57.cep3g_sample_distinct_field :calling_modify_parameters_02
+11:39:51~11:39:51	0.441	 sec.
+58.cep3g_sample_distinct_field :calling_modify_parameters_03
+11:39:51~11:39:52	0.535	 sec.
+59.cep3g_sample_distinct_field :calling_modify_parameters_04
+11:39:52~11:39:52	0.542	 sec.
+60.cep3g_sample_distinct_field :calling_modify_parameters_05
+11:39:52~11:39:53	0.535	 sec.
+61.cep3g_sample_distinct_field :calling_modify_parameters_06
+11:39:53~11:39:53	0.513	 sec.
+62.cep3g_sample_distinct_field :calling_modify_parameters_07
+11:39:53~11:39:54	0.488	 sec.
+63.cep3g_sample_distinct_field :calling_ms_classmark
+11:39:54~11:39:54	0.497	 sec.
+64.cep3g_sample_distinct_field :calling_number
+11:39:54~11:39:55	0.738	 sec.
+65.cep3g_sample_distinct_field :calling_number_npi
+11:39:55~11:39:55	0.55	 sec.
+66.cep3g_sample_distinct_field :calling_number_ton
+11:39:55~11:39:56	0.611	 sec.
+67.cep3g_sample_distinct_field :calling_subs_first_ci
+11:39:56~11:39:57	0.622	 sec.
+68.cep3g_sample_distinct_field :calling_subs_first_lac
+11:39:57~11:39:57	0.469	 sec.
+69.cep3g_sample_distinct_field :calling_subs_first_mcc
+11:39:57~11:39:58	0.463	 sec.
+70.cep3g_sample_distinct_field :calling_subs_first_mnc
+11:39:58~11:39:58	0.508	 sec.
+71.cep3g_sample_distinct_field :calling_subs_last_ci
+11:39:58~11:39:59	0.545	 sec.
+72.cep3g_sample_distinct_field :calling_subs_last_ex_id
+11:39:59~11:39:59	0.438	 sec.
+73.cep3g_sample_distinct_field :calling_subs_last_ex_id_ton
+11:39:59~11:39:59	0.434	 sec.
+74.cep3g_sample_distinct_field :calling_subs_last_lac
+11:39:59~11:40:00	0.493	 sec.
+75.cep3g_sample_distinct_field :calling_subs_last_mcc
+11:40:00~11:40:00	0.505	 sec.
+76.cep3g_sample_distinct_field :calling_subs_last_mnc
+11:40:00~11:40:01	0.47	 sec.
+77.cep3g_sample_distinct_field :camel_call_reference
+11:40:01~11:40:02	0.743	 sec.
+78.cep3g_sample_distinct_field :camel_exchange_id
+11:40:02~11:40:02	0.552	 sec.
+79.cep3g_sample_distinct_field :camel_exchange_id_ton
+11:40:02~11:40:03	0.537	 sec.
+80.cep3g_sample_distinct_field :carrier_selection
+11:40:03~11:40:03	0.544	 sec.
+81.cep3g_sample_distinct_field :cause_for_termination
+11:40:03~11:40:04	0.549	 sec.
+82.cep3g_sample_distinct_field :cf_information
+11:40:04~11:40:04	0.508	 sec.
+83.cep3g_sample_distinct_field :channel_rate_indicator_01
+11:40:04~11:40:05	0.463	 sec.
+84.cep3g_sample_distinct_field :channel_rate_indicator_02
+11:40:05~11:40:05	0.515	 sec.
+85.cep3g_sample_distinct_field :charging_end_time
+11:40:05~11:40:06	0.476	 sec.
+86.cep3g_sample_distinct_field :charging_start_time
+11:40:06~11:40:06	0.49	 sec.
+87.cep3g_sample_distinct_field :check_sum
+11:40:06~11:40:07	0.569	 sec.
+88.cep3g_sample_distinct_field :connected_to_number
+11:40:07~11:40:08	0.696	 sec.
+89.cep3g_sample_distinct_field :connected_to_number_npi
+11:40:08~11:40:08	0.452	 sec.
+90.cep3g_sample_distinct_field :connected_to_number_ton
+11:40:08~11:40:09	0.515	 sec.
+91.cep3g_sample_distinct_field :cug_information
+11:40:09~11:40:09	0.527	 sec.
+92.cep3g_sample_distinct_field :cug_interlock_01
+11:40:09~11:40:10	0.538	 sec.
+93.cep3g_sample_distinct_field :cug_interlock_02
+11:40:10~11:40:10	0.531	 sec.
+94.cep3g_sample_distinct_field :cug_outgoing_access
+11:40:10~11:40:11	0.439	 sec.
+95.cep3g_sample_distinct_field :data_volume
+11:40:11~11:40:11	0.444	 sec.
+96.cep3g_sample_distinct_field :dialled_digits
+11:40:11~11:40:12	0.61	 sec.
+97.cep3g_sample_distinct_field :dialled_digits_npi
+11:40:12~11:40:12	0.476	 sec.
+98.cep3g_sample_distinct_field :dialled_digits_ton
+11:40:12~11:40:13	0.438	 sec.
+99.cep3g_sample_distinct_field :dtmf_indicator
+11:40:13~11:40:13	0.431	 sec.
+100.cep3g_sample_distinct_field :emergency_call_category_01
+11:40:13~11:40:13	0.482	 sec.
+101.cep3g_sample_distinct_field :emergency_call_category_02
+11:40:13~11:40:14	0.475	 sec.
+102.cep3g_sample_distinct_field :emergency_call_category_03
+11:40:14~11:40:15	0.54	 sec.
+103.cep3g_sample_distinct_field :emergency_call_category_04
+11:40:15~11:40:15	0.54	 sec.
+104.cep3g_sample_distinct_field :emergency_call_category_05
+11:40:15~11:40:16	0.489	 sec.
+105.cep3g_sample_distinct_field :exchange_id
+11:40:16~11:40:16	0.469	 sec.
+106.cep3g_sample_distinct_field :facility_usage_01
+11:40:16~11:40:17	0.526	 sec.
+107.cep3g_sample_distinct_field :facility_usage_02
+11:40:17~11:40:17	0.514	 sec.
+108.cep3g_sample_distinct_field :facility_usage_03
+11:40:17~11:40:18	0.5	 sec.
+109.cep3g_sample_distinct_field :facility_usage_04
+11:40:18~11:40:18	0.525	 sec.
+110.cep3g_sample_distinct_field :facility_usage_05
+11:40:18~11:40:19	0.548	 sec.
+111.cep3g_sample_distinct_field :facility_usage_06
+11:40:19~11:40:19	0.551	 sec.
+112.cep3g_sample_distinct_field :facility_usage_07
+11:40:19~11:40:20	0.548	 sec.
+113.cep3g_sample_distinct_field :facility_usage_08
+11:40:20~11:40:20	0.556	 sec.
+114.cep3g_sample_distinct_field :facility_usage_09
+11:40:20~11:40:22	1.277	 sec.
+115.cep3g_sample_distinct_field :facility_usage_10
+11:40:22~11:40:22	0.464	 sec.
+116.cep3g_sample_distinct_field :facility_usage_11
+11:40:22~11:40:23	0.515	 sec.
+117.cep3g_sample_distinct_field :facility_usage_12
+11:40:23~11:40:23	0.542	 sec.
+118.cep3g_sample_distinct_field :facility_usage_13
+11:40:23~11:40:24	0.501	 sec.
+119.cep3g_sample_distinct_field :facility_usage_14
+11:40:24~11:40:24	0.501	 sec.
+120.cep3g_sample_distinct_field :facility_usage_15
+11:40:24~11:40:25	0.473	 sec.
+121.cep3g_sample_distinct_field :facility_usage_16
+11:40:25~11:40:25	0.49	 sec.
+122.cep3g_sample_distinct_field :facility_usage_17
+11:40:25~11:40:26	0.492	 sec.
+123.cep3g_sample_distinct_field :facility_usage_18
+11:40:26~11:40:26	0.506	 sec.
+124.cep3g_sample_distinct_field :facility_usage_19
+11:40:26~11:40:27	0.493	 sec.
+125.cep3g_sample_distinct_field :facility_usage_20
+11:40:27~11:40:27	0.494	 sec.
+126.cep3g_sample_distinct_field :facility_usage_21
+11:40:27~11:40:28	0.55	 sec.
+127.cep3g_sample_distinct_field :facility_usage_22
+11:40:28~11:40:28	0.509	 sec.
+128.cep3g_sample_distinct_field :facility_usage_23
+11:40:28~11:40:29	0.506	 sec.
+129.cep3g_sample_distinct_field :facility_usage_24
+11:40:29~11:40:29	0.48	 sec.
+130.cep3g_sample_distinct_field :facility_usage_25
+11:40:29~11:40:30	0.512	 sec.
+131.cep3g_sample_distinct_field :facility_usage_26
+11:40:30~11:40:30	0.444	 sec.
+132.cep3g_sample_distinct_field :facility_usage_27
+11:40:30~11:40:30	0.426	 sec.
+133.cep3g_sample_distinct_field :forwarded_to_number
+11:40:30~11:40:31	0.409	 sec.
+134.cep3g_sample_distinct_field :forwarded_to_number_ton
+11:40:31~11:40:31	0.403	 sec.
+135.cep3g_sample_distinct_field :hot_billing_record_number
+11:40:31~11:40:32	0.398	 sec.
+136.cep3g_sample_distinct_field :in_bnc_connection_type
+11:40:32~11:40:32	0.404	 sec.
+137.cep3g_sample_distinct_field :in_channel_allocated_time
+11:40:32~11:40:32	0.418	 sec.
+138.cep3g_sample_distinct_field :in_circuit
+11:40:32~11:40:33	0.409	 sec.
+139.cep3g_sample_distinct_field :in_circuit_group
+11:40:33~11:40:33	0.399	 sec.
+140.cep3g_sample_distinct_field :inside_control_plane_index
+11:40:33~11:40:34	0.415	 sec.
+141.cep3g_sample_distinct_field :inside_user_plane_index
+11:40:34~11:40:34	0.406	 sec.
+142.cep3g_sample_distinct_field :intermediate_charging_ind
+11:40:34~11:40:35	0.399	 sec.
+143.cep3g_sample_distinct_field :intermediate_chrg_cause_01
+11:40:35~11:40:35	0.404	 sec.
+144.cep3g_sample_distinct_field :intermediate_chrg_cause_02
+11:40:35~11:40:35	0.449	 sec.
+145.cep3g_sample_distinct_field :intermediate_chrg_cause_03
+11:40:35~11:40:36	0.439	 sec.
+146.cep3g_sample_distinct_field :intermediate_chrg_cause_04
+11:40:36~11:40:37	0.804	 sec.
+147.cep3g_sample_distinct_field :intermediate_chrg_cause_05
+11:40:37~11:40:37	0.495	 sec.
+148.cep3g_sample_distinct_field :intermediate_chrg_cause_06
+11:40:37~11:40:38	0.46	 sec.
+149.cep3g_sample_distinct_field :intermediate_chrg_cause_07
+11:40:38~11:40:38	0.403	 sec.
+150.cep3g_sample_distinct_field :intermediate_chrg_cause_08
+11:40:38~11:40:38	0.437	 sec.
+151.cep3g_sample_distinct_field :intermediate_record_number
+11:40:38~11:40:39	0.434	 sec.
+152.cep3g_sample_distinct_field :leg_call_reference
+11:40:39~11:40:39	0.399	 sec.
+153.cep3g_sample_distinct_field :leg_call_reference_comp
+11:40:39~11:40:40	0.406	 sec.
+154.cep3g_sample_distinct_field :leg_call_reference_focus
+11:40:40~11:40:40	0.399	 sec.
+155.cep3g_sample_distinct_field :leg_call_reference_process
+11:40:40~11:40:40	0.401	 sec.
+156.cep3g_sample_distinct_field :loc_routing_number
+11:40:40~11:40:41	0.437	 sec.
+157.cep3g_sample_distinct_field :loc_routing_number_ton
+11:40:41~11:40:41	0.403	 sec.
+158.cep3g_sample_distinct_field :ms_classmark3
+11:40:41~11:40:42	0.401	 sec.
+159.cep3g_sample_distinct_field :non_transparency_indicator
+11:40:42~11:40:42	0.45	 sec.
+160.cep3g_sample_distinct_field :npdb_query_status
+11:40:42~11:40:43	0.439	 sec.
+161.cep3g_sample_distinct_field :number_of_all_in_records
+11:40:43~11:40:43	0.429	 sec.
+162.cep3g_sample_distinct_field :number_of_ss_records
+11:40:43~11:40:43	0.444	 sec.
+163.cep3g_sample_distinct_field :orig_calling_number
+11:40:43~11:40:44	0.531	 sec.
+164.cep3g_sample_distinct_field :orig_calling_number_npi
+11:40:44~11:40:44	0.432	 sec.
+165.cep3g_sample_distinct_field :orig_calling_number_ton
+11:40:44~11:40:45	0.436	 sec.
+166.cep3g_sample_distinct_field :orig_dialling_class
+11:40:45~11:40:45	0.43	 sec.
+167.cep3g_sample_distinct_field :orig_mcz_chrg_type_01
+11:40:45~11:40:46	0.439	 sec.
+168.cep3g_sample_distinct_field :orig_mcz_chrg_type_02
+11:40:46~11:40:46	0.409	 sec.
+169.cep3g_sample_distinct_field :orig_mcz_chrg_type_03
+11:40:46~11:40:47	0.44	 sec.
+170.cep3g_sample_distinct_field :orig_mcz_chrg_type_04
+11:40:47~11:40:47	0.442	 sec.
+171.cep3g_sample_distinct_field :orig_mcz_chrg_type_05
+11:40:47~11:40:47	0.448	 sec.
+172.cep3g_sample_distinct_field :orig_mcz_duration
+11:40:47~11:40:48	0.44	 sec.
+173.cep3g_sample_distinct_field :orig_mcz_duration_ten_ms
+11:40:48~11:40:48	0.463	 sec.
+174.cep3g_sample_distinct_field :orig_mcz_modify_direction
+11:40:48~11:40:49	0.426	 sec.
+175.cep3g_sample_distinct_field :orig_mcz_modify_percent
+11:40:49~11:40:49	0.431	 sec.
+176.cep3g_sample_distinct_field :orig_mcz_pulses
+11:40:49~11:40:50	0.429	 sec.
+177.cep3g_sample_distinct_field :orig_mcz_tariff_class
+11:40:50~11:40:50	0.44	 sec.
+178.cep3g_sample_distinct_field :out_bnc_connection_type
+11:40:50~11:40:51	0.43	 sec.
+179.cep3g_sample_distinct_field :out_channel_allocated_time
+11:40:51~11:40:51	0.46	 sec.
+180.cep3g_sample_distinct_field :out_circuit
+11:40:51~11:40:51	0.434	 sec.
+181.cep3g_sample_distinct_field :out_circuit_group
+11:40:51~11:40:52	0.434	 sec.
+182.cep3g_sample_distinct_field :outside_control_plane_index
+11:40:52~11:40:52	0.439	 sec.
+183.cep3g_sample_distinct_field :outside_user_plane_index
+11:40:52~11:40:53	0.424	 sec.
+184.cep3g_sample_distinct_field :pic
+11:40:53~11:40:53	0.395	 sec.
+185.cep3g_sample_distinct_field :pni
+11:40:53~11:40:54	0.421	 sec.
+186.cep3g_sample_distinct_field :radio_network_type
+11:40:54~11:40:54	0.396	 sec.
+187.cep3g_sample_distinct_field :rate_adaption
+11:40:54~11:40:54	0.395	 sec.
+188.cep3g_sample_distinct_field :record_length
+11:40:54~11:40:55	0.401	 sec.
+189.cep3g_sample_distinct_field :record_number
+11:40:55~11:40:55	0.666	 sec.
+190.cep3g_sample_distinct_field :record_status
+11:40:55~11:40:56	0.397	 sec.
+191.cep3g_sample_distinct_field :record_type
+11:40:56~11:40:56	0.397	 sec.
+192.cep3g_sample_distinct_field :redirected_indicator
+11:40:56~11:40:57	0.401	 sec.
+193.cep3g_sample_distinct_field :redirecting_number
+11:40:57~11:40:57	0.404	 sec.
+194.cep3g_sample_distinct_field :redirecting_number_npi
+11:40:57~11:40:57	0.411	 sec.
+195.cep3g_sample_distinct_field :redirecting_number_ton
+11:40:57~11:40:58	0.411	 sec.
+196.cep3g_sample_distinct_field :regional_subs_indicator
+11:40:58~11:40:58	0.41	 sec.
+197.cep3g_sample_distinct_field :regional_subs_location_type
+11:40:58~11:40:59	0.404	 sec.
+198.cep3g_sample_distinct_field :req_air_interface_user_rate
+11:40:59~11:40:59	0.405	 sec.
+199.cep3g_sample_distinct_field :req_fixed_nw_user_rate
+11:40:59~11:40:59	0.424	 sec.
+200.cep3g_sample_distinct_field :req_number_of_channels
+11:40:59~11:41:00	0.409	 sec.
+201.cep3g_sample_distinct_field :req_other_modem_type
+11:41:00~11:41:00	0.408	 sec.
+202.cep3g_sample_distinct_field :req_user_initiated_mod_ind
+11:41:00~11:41:01	0.402	 sec.
+203.cep3g_sample_distinct_field :routing_category
+11:41:01~11:41:01	0.397	 sec.
+204.cep3g_sample_distinct_field :routing_info
+11:41:01~11:41:01	0.398	 sec.
+205.cep3g_sample_distinct_field :set_up_start_time
+11:41:01~11:41:02	0.458	 sec.
+206.cep3g_sample_distinct_field :speech_version
+11:41:02~11:41:02	0.407	 sec.
+207.cep3g_sample_distinct_field :start_time
+11:41:02~11:41:03	0.424	 sec.
+208.cep3g_sample_distinct_field :stream_identifier
+11:41:03~11:41:03	0.412	 sec.
+209.cep3g_sample_distinct_field :term_mcz_chrg_type_01
+11:41:03~11:41:04	0.408	 sec.
+210.cep3g_sample_distinct_field :term_mcz_chrg_type_02
+11:41:04~11:41:04	0.408	 sec.
+211.cep3g_sample_distinct_field :term_mcz_chrg_type_03
+11:41:04~11:41:04	0.408	 sec.
+212.cep3g_sample_distinct_field :term_mcz_chrg_type_04
+11:41:04~11:41:05	0.414	 sec.
+213.cep3g_sample_distinct_field :term_mcz_chrg_type_05
+11:41:05~11:41:05	0.412	 sec.
+214.cep3g_sample_distinct_field :term_mcz_duration
+11:41:05~11:41:06	0.411	 sec.
+215.cep3g_sample_distinct_field :term_mcz_duration_ten_ms
+11:41:06~11:41:06	0.442	 sec.
+216.cep3g_sample_distinct_field :term_mcz_modify_direction
+11:41:06~11:41:06	0.4	 sec.
+217.cep3g_sample_distinct_field :term_mcz_modify_percent
+11:41:06~11:41:07	0.406	 sec.
+218.cep3g_sample_distinct_field :term_mcz_pulses
+11:41:07~11:41:07	0.399	 sec.
+219.cep3g_sample_distinct_field :term_mcz_tariff_class
+11:41:07~11:41:08	0.409	 sec.
+220.cep3g_sample_distinct_field :tns_carrier_code
+11:41:08~11:41:08	0.405	 sec.
+221.cep3g_sample_distinct_field :tns_circuit_code
+11:41:08~11:41:08	0.404	 sec.
+222.cep3g_sample_distinct_field :used_air_interface_user_rate
+11:41:08~11:41:09	0.412	 sec.
+223.cep3g_sample_distinct_field :used_channel_coding
+11:41:09~11:41:09	0.447	 sec.
+224.cep3g_sample_distinct_field :used_fixed_nw_user_rate
+11:41:09~11:41:10	0.413	 sec.
+225.cep3g_sample_distinct_field :used_number_of_channels
+11:41:10~11:41:10	0.43	 sec.
+226.cep3g_sample_distinct_field :used_other_modem_type
+11:41:10~11:41:11	0.437	 sec.
+227.cep3g_sample_distinct_field :date_time
+11:41:11~11:41:11	0.441	 sec.
+228.cep3g_sample_distinct_field :short_called_number
+11:41:11~11:41:11	0.423	 sec.
+229.cep3g_sample_distinct_field :reversed_called_number
+11:41:11~11:41:12	0.42	 sec.
+230.cep3g_sample_distinct_field :short_calling_number
+11:41:12~11:41:12	0.403	 sec.
+231.cep3g_sample_distinct_field :reversed_calling_number
+11:41:12~11:41:13	0.425	 sec.
+232.cep3g_sample_distinct_field :short_connected_to_number
+11:41:13~11:41:13	0.421	 sec.
+233.cep3g_sample_distinct_field :reversed_connected_to_number
+11:41:13~11:41:14	0.415	 sec.
+234.cep3g_sample_distinct_field :short_orig_calling_number
+11:41:14~11:41:14	0.436	 sec.
+235.cep3g_sample_distinct_field :reversed_orig_calling_number
+11:41:14~11:41:14	0.424	 sec.
+236.cep3g_sample_distinct_field :short_redirecting_number
+11:41:14~11:41:15	0.43	 sec.
+237.cep3g_sample_distinct_field :reversed_redirecting_number
+11:41:15~11:41:15	0.428	 sec.
+238.cep3g_sample_distinct_field :release_time
+11:41:15~11:41:16	0.417	 sec.
+cep3g_sample_cardinality
+11:41:16~11:41:16	0.428	 sec.
+cep3g_sample_temp.drop():	done

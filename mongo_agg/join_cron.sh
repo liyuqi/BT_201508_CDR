@@ -1,7 +1,7 @@
-max_id=`mongo cdr --eval 'db.cep3g_sample.find({record_type:{\$in:["1","2"]}}).limit(1).forEach(function(doc){print(doc._id)})' |tail -n 1`
+max_id=`mongo cdr --host 192.168.0.190 --port 40000 --eval 'db.cep3g_sample.find({record_type:{\$in:["1","2"]}}).limit(1).forEach(function(doc){print(doc._id)})' |tail -n 1`
 
 pick=1000
-bucket=`mongo cdr --eval "var n = (db.cep3g_gen.count() - db.cep3g_join.count())/$pick; print(Math.ceil(n));" | tail -n 1`
+bucket=`mongo cdr --host 192.168.0.190 --port 40000 --eval "var n = (db.cep3g_gen.count() - db.cep3g_join.count())/$pick; print(Math.ceil(n));" | tail -n 1`
 
 echo $bucket
 pick=5
